@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import Button from '@mui/material/Button';
 
 
 function TopLayout (props) {
@@ -16,6 +17,7 @@ function TopLayout (props) {
   };
 
     return (
+      <>
       <Grid
       container
       spacing={0}
@@ -24,13 +26,13 @@ function TopLayout (props) {
       justifyContent="center"
       style={{ minHeight: '50vh' }}
     >
-        <Grid item xs={2}>
+        <Grid item xs={4}>
             <TextField style={{width:'100%'}}id="service" label="Service" />  
         </Grid>
         <Grid item xs={1}>
           <TextField label="Zip code" id="zip" />
         </Grid>
-        <Grid item xs={1}>
+        <Grid item xs={2}>
          <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DateTimePicker
             value={value}
@@ -40,6 +42,7 @@ function TopLayout (props) {
          </LocalizationProvider>
         </Grid>
       </Grid>
+      </>
     );
 }
 

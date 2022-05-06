@@ -72,6 +72,16 @@
 
 .title{
   text-align: center;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 20px;
+  letter-spacing: 2px;
+  word-spacing: 2px;
+  color: #000000;
+  font-weight: normal;
+  text-decoration: none;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: lowercase;
 }
 
 
