@@ -1,0 +1,77 @@
+.hero-image {
+  background-image: linear-gradient(rgba(253, 252, 252, 0.5), rgba(0, 0, 0, 0.5)), url("https://wallpaper.dog/large/10882317.jpg");
+}
+
+
+.MuiOutlinedInput-root{
+  background-color: white;
+}
+
+.hero-image{
+  flex: 0 0 100%;
+  max-height: 50%;
+  min-height: 50%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.main{
+  flex: 0 1 50%;
+  display: flex;
+  height: 100%;
+  max-width: 100%;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  position: relative;
+}
+
+.categories{
+  margin: auto;
+  width: 60%;
+  padding: 10px;
+} 
+
+.css-mhc70k-MuiGrid-root{
+  margin-left: 0;
+}
+
+@media only screen and (max-width: 600px){
+  .categories{
+    width: 100%;
+    margin-left: 10%;
+  }
+}
+/* cards */
+.card{
+  position: relative;
+  height: 15vh;
+  width:100%;
+  background-color: rgb(226, 76, 88);
+}
+
+.picture{
+  z-index:-1;
+  height: 100%;
+  width: 100%;
+  display: block;
+  filter:brightness(1.39) contrast(1.07) hue-rotate(170deg) invert(0.28) opacity(0.89) saturate(1.63) ;
+}
+
+.picture:hover{
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.text{
+  position: absolute;
+  color: rgb(255, 255, 255);
+  top: 80%;
+  left: 15%;
+  transform: translate(-50%, -50%);
+}
+
+.title{
+  text-align: center;
+}
+
+
