@@ -1,0 +1,48 @@
+.css-1idn90j-MuiGrid-root{
+  height: 25vh;
+}
+
+.profile{
+  position: relative;
+  margin-top: -20%;
+  margin-left: 2%;
+
+}
+
+.profile-picture{
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  border-style: solid;
+  border-color: white;
+  cursor: pointer;
+}
+
+.profile-picture:hover{
+  border-color: rgb(105, 88, 88);
+}
+
+.cover-photo{
+  width:100%;
+  height:100%;
+  cursor: pointer;
+}
+
+.profilepage{
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.presonalinfo{
+  text-align: left;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .profilepage {
+    width: 98%;
+    margin-left: 1%;
+    margin-right: 1%;
+  }
+}

@@ -7,3 +7,13 @@ div.MuiTypography-root{
 header.MuiPaper-root{
   background-color: rgba(21, 2, 2, 0.768);
 }
+
+.mylogo{
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+.profilenav{
+  text-decoration: none;
+  color:rgb(0, 0, 0)
+}

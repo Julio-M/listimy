@@ -24,6 +24,10 @@
   margin-top: 2rem;
 }
 
+#go-to-login{
+  color: rgb(232, 222, 222);
+}
+
 /* select */
 
 .select{

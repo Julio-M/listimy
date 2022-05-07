@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import './login.css'
+import { useNavigate } from "react-router-dom";
 
 function Login (props) {
+    let navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/signup-user')
+    }
+
     return (
       <div className="login-box" id={"sBoxColor"}>
       <h2>{"Login"}</h2>
@@ -17,7 +24,7 @@ function Login (props) {
           </div>
           <Button type='submit' id='submitLogin'>{"Log In"}</Button>
           <div className='sbutton'>
-          <Button id='submitSignUp'>{"Go to Sign Up"}</Button>
+          <Button onClick={handleClick} id='go-to-sign-up'>Go to Sign Up</Button>
           </div>
       </form>
   </div>
