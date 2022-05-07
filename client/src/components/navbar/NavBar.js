@@ -17,7 +17,7 @@ import './navbar.css'
 const pages = ['Products'];
 const settings = [<Link className='profilenav' to='/myprofile'>Profile</Link>, 'Account','Logout'];
 
-const NavBar = () => {
+const NavBar = ({currentUser}) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -46,7 +46,7 @@ const NavBar = () => {
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-             <Link className='mylogo' to="/">listimy</Link>
+             {currentUser?<Link className='mylogo' to="/">listimy</Link>:<Link className='mylogo' to="/login">listimy</Link>}
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
