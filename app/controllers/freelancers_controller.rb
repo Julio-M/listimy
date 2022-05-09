@@ -1,15 +1,16 @@
 class FreelancersController < ApplicationController
-    before_action :find_freelancer, only: %i[show update]
-    skip_before_action :authorize, only: %i[index create show update]
+    before_action :find_freelancer, only: %i[update]
+    skip_before_action :authorize, only: %i[index create update]
     
     def index
         freelancers = Freelancer.all
         render json: freelancers
     end
 
-    def show
-        render json: @freelancer
-    end
+    # def show
+    # this function was placed under user controller
+    #     render json: @freelancer
+    # end
 
     def create
         freelancer = Freelancer.create!(free_params)
@@ -17,10 +18,11 @@ class FreelancersController < ApplicationController
         render json: freelancer, status: :created
     end
 
-    def update
-        @freelancer.update(free_params)
-        render json: @freelancer, status: :accepted
-    end
+    # def update
+    #     this function was placed under user controller
+    #     @freelancer.update(free_params)
+    #     render json: @freelancer, status: :accepted
+    # end
 
     private
     # goes under private

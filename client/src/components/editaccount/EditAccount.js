@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import './editaccount.css'
 import { Button } from "@mui/material";
 import axios from 'axios'
-import { valueToPercent } from "@mui/base";
 
 function EditAccount ({currentUser,setCurrentUser}) {  
 
@@ -50,7 +49,7 @@ function EditAccount ({currentUser,setCurrentUser}) {
     }
 
     const patchData = () => {
-      fetch(`/me-freelancer`, {
+      fetch(`/update-profile`, {
           method: "PATCH",
           headers: {
               "Content-Type": "application/json",
@@ -102,10 +101,6 @@ function EditAccount ({currentUser,setCurrentUser}) {
       <div className="user-box">
       <input onChange={handleChange} type="text" name="location"/>
       <label>Location</label>
-      </div>
-      <div className="user-box">
-      <input onChange={handleChange} type="text" name="location"/>
-      <label>Service</label>
       </div>
       </>
     )

@@ -37,31 +37,32 @@ function App() {
 
 
   //retain freelancer start
-  const retainFreelancer = () => {
-    fetch("/me-freelancer").then((r) => {
-      if (r.ok) {
-        r.json().then((user) => {
-          setCurrentUser(user)
-        })
-      } else{
-        console.log(currentUser)
-      }
-    })
-  }
+  // const retainFreelancer = () => {
+  //   fetch("/me-freelancer").then((r) => {
+  //     if (r.ok) {
+  //       r.json().then((user) => {
+  //         setCurrentUser(user)
+  //       })
+  //     } else{
+  //       console.log(currentUser)
+  //     }
+  //   })
+  // }
 
   // console.log('Is this ture',retainUser()===undefined)
   ////retain freelancer end
 
   useEffect(() => {
-    fetch('/me').then(r=> {
-      if(r.ok){
-        console.log('Do this')
-        retainUser()
-      } else {
-       console.log('No user')
-       retainFreelancer()
-      }
-    })
+    // fetch('/me').then(r=> {
+    //   if(r.ok){
+    //     console.log('Do this')
+    //     retainUser()
+    //   } else {
+    //    console.log('No user')
+    //    retainFreelancer()
+    //   }
+    // })
+    retainUser()
   }, []);
 
 
