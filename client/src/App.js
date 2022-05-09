@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import NavBar from './components/navbar/NavBar';
 import { Routes, Route, Link } from "react-router-dom";
 import LandingPage from './components/landingpage/LandingPage';
@@ -8,24 +8,30 @@ import Login from './components/login/Login';
 import SignupUser from './components/signup/SignupUser';
 import UserProfile from './components/profiles/UserProfile';
 import { useNavigate } from "react-router-dom";
+import Places from './components/places/Places';
+
+
 
 function App() {
   let navigate = useNavigate();
 
-  const [currentUser,setCurrentUser] = useState('')
+  const [currentUser,setCurrentUser] = useState('s')
 
+  
   useEffect( () => {
-  if (currentUser) {
-    navigate('/')
-  }else{
-    navigate('/login')
-  }
+    if (currentUser) {
+      navigate('/')
+    }else{
+      navigate('/login')
+    }
   },[])
+  
 
   const displayLoged = (
         <>
         <Route path="/" element={<LandingPage/>} />
         <Route path="/myprofile" element={<UserProfile/>} />
+        <Route path="/places" element={<Places />} />
         </>
     )
 

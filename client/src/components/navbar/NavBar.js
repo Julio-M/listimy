@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from "react-router-dom";
 import './navbar.css'
 
-const pages = ['Products'];
+const pages = [<Link to='/places'>Products</Link>];
 const settings = [<Link className='profilenav' to='/myprofile'>Profile</Link>, 'Account','Logout'];
 
 const NavBar = ({currentUser}) => {
