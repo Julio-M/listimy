@@ -1,8 +1,10 @@
-#submitLogin {
+#submitEdit {
   color: rgb(255, 255, 255);
   border: solid;
   border-color: rgb(226, 148, 148);
-  width: 100%;
+  margin-left: 25%;
+  width: 50%;
+  margin-top: 20%;
 }
 
 #submitSignUp {
@@ -24,11 +26,12 @@
   margin-top: 2rem;
 }
 
-.login-box {
+.edit-box {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 400px;
+  height:80%;
+  width: 70%;
   padding: 40px;
   transform: translate(-50%, -50%);
   background: rgba(0, 0, 0, 0.5);
@@ -37,18 +40,18 @@
   border-radius: 10px;
 }
 
-.login-box h2 {
+.edit-box h2 {
   margin: 0 0 30px;
   padding: 0;
   color: #fff;
   text-align: center;
 }
 
-.login-box .user-box {
+.edit-box .user-box {
   position: relative;
 }
 
-.login-box .user-box input {
+.edit-box .user-box input {
   width: 100%;
   padding: 10px 0;
   font-size: 16px;
@@ -59,7 +62,7 @@
   outline: none;
   background: transparent;
 }
-.login-box .user-box label {
+.edit-box .user-box label {
   position: absolute;
   top: 0;
   left: 0;
@@ -70,15 +73,15 @@
   transition: 0.5s;
 }
 
-.login-box .user-box input:focus ~ label,
-.login-box .user-box input:valid ~ label {
+.edit-box .user-box input:focus ~ label,
+.edit-box .user-box input:valid ~ label {
   top: -20px;
   left: 0;
   color: #03e9f4;
   font-size: 12px;
 }
 
-.login-box form a {
+.edit-box form a {
   position: relative;
   display: inline-block;
   padding: 10px 20px;
@@ -92,7 +95,7 @@
   letter-spacing: 4px;
 }
 
-.login-box a:hover {
+.edit-box a:hover {
   background: #03e9f4;
   color: #fff;
   border-radius: 5px;
@@ -100,12 +103,12 @@
     0 0 100px #03e9f4;
 }
 
-.login-box a span {
+.edit-box a span {
   position: absolute;
   display: block;
 }
 
-.login-box a span:nth-child(1) {
+.edit-box a span:nth-child(1) {
   top: 0;
   left: -100%;
   width: 100%;
@@ -124,7 +127,7 @@
   }
 }
 
-.login-box a span:nth-child(2) {
+.edit-box a span:nth-child(2) {
   top: -100%;
   right: 0;
   width: 2px;
@@ -144,7 +147,7 @@
   }
 }
 
-.login-box a span:nth-child(3) {
+.edit-box a span:nth-child(3) {
   bottom: 0;
   right: -100%;
   width: 100%;
@@ -164,7 +167,7 @@
   }
 }
 
-.login-box a span:nth-child(4) {
+.edit-box a span:nth-child(4) {
   bottom: -100%;
   left: 0;
   width: 2px;
@@ -189,7 +192,7 @@
 }
 
 @media only screen and (max-width: 600px) {
-  .login-box {
+  .edit-box {
     width: 300px;
   }
 }

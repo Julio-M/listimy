@@ -4,6 +4,9 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import { Button } from "@mui/material";
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -13,28 +16,83 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function UserProfile (props) {
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  height:300,
+  width: 300,
+  bgcolor: 'background.paper',
+  border: '1px solid #000',
+  boxShadow: 24,
+  p: 4,
+  textAlign:"center",
+};
+
+function UserProfile ({currentUser}) {
+
+  const [which, setWhich] = useState('profile')
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = (e) => {
+    const name = e.target.name
+    setWhich(name)
+    setOpen(true)
+  }
+  const handleClose = () => setOpen(false);
+
+  console.log(currentUser)
+
+  const displayFreelanceAddOns = (
+      <>
+        <Grid item xs={6}>
+          <Item>
+          Photos
+          <img src={currentUser.services_photos} alt='color'/>
+          </Item>
+        </Grid>
+        <Grid item xs={6}>
+          <Item>
+          Services & Prices
+          <p>{currentUser.username}</p>
+          <Button>Book an appointment</Button>
+          </Item>
+          
+        </Grid>
+        <Grid item xs={4}>
+          <Item>About</Item>
+        </Grid>
+        <Grid item xs={4}>
+          <Item>Map</Item>
+        </Grid>
+        <Grid item xs={4}>
+          <Item>Contact Info</Item>
+        </Grid>
+       </>
+  )
   
     return (
+      <>
       <Box className='profilepage'>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <img className='cover-photo' src='https://wallpapercave.com/wp/wp3313545.jpg' alt='cover'/>
+          <img className='cover-photo' name='cover'onClick={handleOpen} src={currentUser.cover_photo} alt='cover'/>
         </Grid>
         <Grid item xs={4}>
         <div className='profile'>
-        <img className='profile-picture' src='https://media-exp1.licdn.com/dms/image/C4D03AQHYejL74A-4xw/profile-displayphoto-shrink_400_400/0/1641158640636?e=1657152000&v=beta&t=lSPRMxV2W9vHiJbmqJ_EjF4PXhA8sI8HCR8KtmuoDu0' alt='profile'/>
+        <img className='profile-picture' name='profile' onClick={handleOpen} src={currentUser.profile_picture} alt='profile'/>
           <div className='presonalinfo'>
-            <h3 className='username'>Xhulio Mihali</h3>
-            <p className='Location'>New York City, NY</p>
-            <p className='account-type'>Client</p>
-            <p className='rating'>4.5/5</p>
+            <h3 className='username'>{currentUser.username}</h3>
+            <p className='Location'>{currentUser.email}</p>
+            <p className='account-type'>Type: {currentUser.services?"Freelancer":"Client"}</p>
           </div>
         </div>
         </Grid>
         <Grid item xs={12}>
           <Item>Previous bookings</Item>
         </Grid>
+        {currentUser&&currentUser.account_type==='user'?null:displayFreelanceAddOns}
         <Grid item xs={6}>
           <Item>Reviews</Item>
         </Grid>
@@ -43,6 +101,20 @@ function UserProfile (props) {
         </Grid>
       </Grid>
     </Box>
+
+    <div>
+    <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <img className='modal' src={which==='profile'?currentUser.profile_picture:currentUser.cover_photo} alt='profile'/>
+        </Box>
+      </Modal>
+    </div>
+    </>
     );
 }
 

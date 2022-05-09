@@ -1,5 +1,6 @@
 class BookingsController < ApplicationController
     before_action :find_booking, only: %i[show]
+    skip_before_action :authorize, only: %i[index]
     
     def index
         bookings = Booking.all
