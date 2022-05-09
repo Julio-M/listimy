@@ -136,7 +136,7 @@ function UserProfile ({currentUser}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <ServiceForm/>
+          <ServiceForm currentUser={currentUser}/>
         </Box>
       </Modal>
     </div>
