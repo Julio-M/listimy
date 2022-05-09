@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :services
   resources :categories
   resources :freelancers
-  resources :users
+  resources :users 
   # Routing logic: fallback requests for React Router.
 
   #users start
@@ -27,6 +27,12 @@ Rails.application.routes.draw do
   post '/login-freelancer', to: 'sessions#create_freelancer'
   delete '/logout-freelancer', to: 'sessions#destroy_freelancer'
   #freelancers end
+
+  #services start
+
+  post '/service-create', to: 'services#create'
+
+  #services end
 
 
   # Leave this here to help deploy your app later!

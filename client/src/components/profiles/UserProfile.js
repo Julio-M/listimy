@@ -7,6 +7,8 @@ import Grid from '@mui/material/Grid';
 import { Button } from "@mui/material";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import ServiceTable from "../servicestable/ServiceTable";
+import ServiceForm from "../servicestable/ServiceForm";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -40,25 +42,35 @@ function UserProfile ({currentUser}) {
     setWhich(name)
     setOpen(true)
   }
-  const handleClose = () => setOpen(false);
+
+  const handleOpenService = () => {
+    setOpenService(true)
+  }
+
+  const [openService,setOpenService] = useState(false)
+
+  const handleClose = () => {
+    setOpen(false)
+    setOpenService(false)
+  };
+
 
   console.log(currentUser)
 
   const displayFreelanceAddOns = (
       <>
-        <Grid item xs={6}>
-          <Item>
-          Photos
-          <img src={currentUser.services_photos} alt='color'/>
+        <Grid id='photo-grid' item xs={6}>
+          <Item className='title-comp'>Photo Album</Item>
+          <Item id='service-photos'>
+          <img className='service-pics' src={currentUser.services_photos} alt='color'/>
           </Item>
         </Grid>
-        <Grid item xs={6}>
-          <Item>
-          Services & Prices
-          <p>{currentUser.username}</p>
-          <Button>Book an appointment</Button>
+        <Grid id='services-prices' item xs={6}>
+          <Item className='title-comp'>Services & Prices <Button onClick={handleOpenService}>+ Add Service</Button></Item>
+          <Item className='services-cont'>
+            <ServiceTable currentUser={currentUser}/>
           </Item>
-          
+          <Item><Button>Book an appointment</Button></Item>
         </Grid>
         <Grid item xs={4}>
           <Item>About</Item>
@@ -101,7 +113,8 @@ function UserProfile ({currentUser}) {
         </Grid>
       </Grid>
     </Box>
-
+    
+    {/*MODALS*/}
     <div>
     <Modal
         open={open}
@@ -111,6 +124,19 @@ function UserProfile ({currentUser}) {
       >
         <Box sx={style}>
           <img className='modal' src={which==='profile'?currentUser.profile_picture:currentUser.cover_photo} alt='profile'/>
+        </Box>
+      </Modal>
+    </div>
+    <div>
+
+    <Modal
+        open={openService}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <ServiceForm/>
         </Box>
       </Modal>
     </div>
