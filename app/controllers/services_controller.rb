@@ -1,5 +1,6 @@
 class ServicesController < ApplicationController
     before_action :find_service, only: %i[show]
+    skip_before_action :authorize, only: %i[index show]
     
     def index
         services = Service.all

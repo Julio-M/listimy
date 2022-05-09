@@ -13,13 +13,43 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from "react-router-dom";
 import './navbar.css'
+import { useNavigate } from "react-router-dom";
 
-const pages = ['Products'];
-const settings = [<Link className='profilenav' to='/myprofile'>Profile</Link>, 'Account','Logout'];
 
-const NavBar = ({currentUser}) => {
+
+const NavBar = ({setCurrentUser,currentUser,accountType}) => {
+  let navigate = useNavigate();
+  const pages = ['Products'];
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+ console.log('From Navbar', currentUser)
+
+ const logoutUser = () => {
+  fetch("/logout", { method: "DELETE" }).then((r) => {
+    if (r.ok) {
+      setCurrentUser(null);
+    }
+  })
+  .then(navigate('/login'))
+ }
+
+ const logoutFreelancer = () => {
+  fetch("/logout-freelancer", { method: "DELETE" }).then((r) => {
+    if (r.ok) {
+      setCurrentUser(null);
+    }
+  })
+  .then(navigate('/login'))
+ }
+
+  const handleLogoutClick = () => {
+    accountType==='user'?logoutUser():logoutFreelancer()
+  }
+
+  const settings = [<Link className='profilenav' to='/myprofile'>Profile</Link>, 'Account',<div onClick={handleLogoutClick}>Logout</div>];
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -35,6 +65,38 @@ const NavBar = ({currentUser}) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const displayLoged = (
+    <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src={currentUser?currentUser.profile_picture:null}/>
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+  )
 
   return (
     <AppBar position="sticky">
@@ -104,36 +166,7 @@ const NavBar = ({currentUser}) => {
               </Button>
             ))}
           </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+             {currentUser?displayLoged:null}
         </Toolbar>
       </Container>
     </AppBar>

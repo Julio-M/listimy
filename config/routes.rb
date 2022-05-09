@@ -7,6 +7,26 @@ Rails.application.routes.draw do
   resources :freelancers
   resources :users
   # Routing logic: fallback requests for React Router.
+
+  #users start
+  post "/signup", to: "users#create"
+  get '/me', to: 'users#show'
+  
+
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
+  #users end
+
+  #freelancers start
+  post "/signup-freelancer", to: "freelancers#create"
+  get '/me-freelancer', to: 'freelancers#show'
+  
+
+  post '/login-freelancer', to: 'sessions#create_freelancer'
+  delete '/logout-freelancer', to: 'sessions#destroy_freelancer'
+  #freelancers end
+
+
   # Leave this here to help deploy your app later!
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 end

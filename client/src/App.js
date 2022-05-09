@@ -10,35 +10,58 @@ import UserProfile from './components/profiles/UserProfile';
 import { useNavigate } from "react-router-dom";
 
 function App() {
+  const [accountType,setAccountType]= useState('user')
   let navigate = useNavigate();
 
-  const [currentUser,setCurrentUser] = useState('')
+  const [currentUser,setCurrentUser] = useState(null)
 
-  useEffect( () => {
-  if (currentUser) {
-    navigate('/')
-  }else{
-    navigate('/login')
+  //retain user start
+  const retainUser = () => {
+    fetch("/me").then((r) => {
+      if (r.ok) {
+        r.json().then((user) => setCurrentUser(user));
+      } else{
+        console.log(currentUser)
+      }
+    })
   }
-  },[])
+  ////retain user end
+
+  //retain freelancer start
+  const retainFreelancer = () => {
+    fetch("/me-freelancer").then((r) => {
+      if (r.ok) {
+        r.json().then((user) => setCurrentUser(user));
+      } else{
+        console.log(currentUser)
+      }
+    })
+  }
+  ////retain freelancer end
+
+
+  useEffect(() => {
+    accountType==='user'?retainUser():retainFreelancer()
+  }, []);
 
   const displayLoged = (
         <>
         <Route path="/" element={<LandingPage/>} />
-        <Route path="/myprofile" element={<UserProfile/>} />
+        <Route path="/myprofile" element={<UserProfile currentUser={currentUser}/>} />
         </>
     )
 
   const displayNotLoged = (
     <>
-        <Route path="/login" element={<Login/>} />
-        <Route path="/signup-user" element={<SignupUser/>} />
+        <Route path="/login" element={<Login onLogin={setCurrentUser} accountType={accountType} setAccountType={setAccountType}/>} />
+        <Route path="/signup-user" element={<SignupUser onLogin={setCurrentUser} accountType={accountType} setAccountType={setAccountType}/>} />
     </>
   )
 
+
   return (
     <div className='app' >
-      <NavBar currentUser={currentUser}/>
+      <NavBar setCurrentUser={setCurrentUser} currentUser={currentUser} accountType={accountType} setAccountType={setAccountType}/>
       <Routes>
         {currentUser?displayLoged:displayNotLoged}
       </Routes>
