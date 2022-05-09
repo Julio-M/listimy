@@ -14,7 +14,7 @@ const Places = ({freelancerData, services, setServices}) => {
     
 
     const {isLoaded} = useLoadScript({
-        googleMapsApiKey: process.env.REACT_APP_API_KEY,
+        googleMapsApiKey: "",
         libraries: ["places"]
     })
     

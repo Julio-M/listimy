@@ -11,7 +11,8 @@ import Geocode from "react-geocode";
 
 const Maps = ({freelancerData, services, setServices}) => {
     
-    Geocode.setApiKey()
+    Geocode.setApiKey('')
+    console.log('What the data looks like')
     const [selected, setSelected] = useState(null)
     const [center, setCenter] = useState({lat: 44, lng: -80})
     const mapRef = useRef()
