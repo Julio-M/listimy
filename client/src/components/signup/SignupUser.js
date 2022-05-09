@@ -91,7 +91,7 @@ function SignupUser ({onLogin, accountType,setAccountType}) {
 
     return (
       <div className="login-box" id={"sBoxColor"}>
-      <h2>{"Sign Up"}</h2>
+      <h2>{`Sign Up as ${accountType}`}</h2>
       <form onSubmit={handleSubmit}>
           <div className="user-box">
           <input onChange={handleChange} type="text" name="username" required="true" value={username}/>
