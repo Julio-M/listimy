@@ -49,7 +49,7 @@ function SignupUser ({onLogin, accountType,setAccountType}) {
    })
    .then( res => {
     if (res.ok){
-      res.json().then((user)=> onLogin(user))
+      res.json().then((user)=> onLogin(user)).then(navigate('/'))
     } else
     {
       res.json().then((err)=> setErrors(err.errors))
@@ -71,7 +71,7 @@ function SignupUser ({onLogin, accountType,setAccountType}) {
     })
     .then( res => {
      if (res.ok){
-       res.json().then((user)=> onLogin(user))
+       res.json().then((user)=> onLogin(user)).then(navigate('/'))
      } else
      {
        res.json().then((err)=> setErrors(err.errors))
