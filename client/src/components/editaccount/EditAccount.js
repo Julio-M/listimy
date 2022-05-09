@@ -26,7 +26,24 @@ function EditAccount ({currentUser,setCurrentUser}) {
               }
           }
       })
-      .then(res=>setEditUser({...editUser, "profile-picture":res.data.secure_url}))
+      .then(res=>setEditUser({...editUser, "profile_picture":res.data.secure_url}))
+      // .then(()=>setIsLoading(0))
+
+    }
+
+    const handleCoverImageSubmit = (e) =>{
+      const formData = new FormData()
+      formData.append("file", myImage)
+      formData.append("upload_preset", "dyza3ykz")
+
+      axios.post("https://api.cloudinary.com/v1_1/dimfaeuml/image/upload",formData,{
+          onUploadProgress: progress => {
+              if(Math.round(progress.loaded/progress.total*100)===100){
+                setIsUp(false)
+              }
+          }
+      })
+      .then(res=>setEditUser({...editUser, "cover_photo":res.data.secure_url}))
       // .then(()=>setIsLoading(0))
 
     }
@@ -61,11 +78,17 @@ function EditAccount ({currentUser,setCurrentUser}) {
     const handleUpload = (e) =>{
       const file = e.target.files[0]
       setMyImage(file)
+      handleImageSubmit()
   }
+
+  const handleCoverUpload = (e) =>{
+    const file = e.target.files[0]
+    setMyImage(file)
+    handleCoverImageSubmit()
+}
 
     const handleSubmit = (e) => {
       e.preventDefault()
-      handleImageSubmit()
       console.log(myImage)
       console.log('Sent data')
       patchData()
@@ -90,10 +113,12 @@ function EditAccount ({currentUser,setCurrentUser}) {
         <form onSubmit={handleSubmit}>
             <div className="user-box">
             <input onChange={handleUpload} name='profile-picture'type='file'/>
+            <Button onClick={handleImageSubmit} id='go-to-sign-up'>Upload Profile Picture</Button>
             <label>Change your profile picture</label>
             </div>
             <div className="user-box">
-            <input onChange={handleChange} name="cover_photo" type='file'/>
+            <input onChange={handleCoverUpload} name="cover_photo" type='file'/>
+            <Button onClick={handleCoverImageSubmit} id='go-to-sign-up'>Upload Cover Photo</Button>
             <label>Change your cover photo</label>
             </div>
             <div className="user-box">
