@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   skip_before_action :authorize, only: %i[create create_freelancer destroy_freelancer]
+  skip_before_action :authorize_freelancer, only: %i[create create_freelancer destroy_freelancer]
 
   #users start
   def create
