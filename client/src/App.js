@@ -3,12 +3,11 @@ import React, { useState, useEffect } from "react";
 import NavBar from './components/navbar/NavBar';
 import { Routes, Route, Link } from "react-router-dom";
 import LandingPage from './components/landingpage/LandingPage';
-import Container from '@mui/material/Container';
 import Login from './components/login/Login';
 import SignupUser from './components/signup/SignupUser';
 import UserProfile from './components/profiles/UserProfile';
 import { useNavigate } from "react-router-dom";
-import { isFriday } from 'date-fns';
+import EditAccount from './components/editaccount/EditAccount';
 
 function App() {
   let navigate = useNavigate();
@@ -16,8 +15,6 @@ function App() {
   const [accountType,setAccountType]= useState('user')
 
   const [currentUser,setCurrentUser] = useState(null)
-
-  const [currentFreelancer,setCurrentFreelancer] = useState(null)
 
   console.log(accountType)
 
@@ -69,6 +66,7 @@ function App() {
         <>
         <Route path="/" element={<LandingPage/>} />
         <Route path="/myprofile" element={<UserProfile currentUser={currentUser}/>} />
+        <Route path="/account" element={<EditAccount currentUser={currentUser}/>} />
         </>
     )
 
@@ -82,7 +80,7 @@ function App() {
 
   return (
     <div className='app' >
-      <NavBar setCurrentUser={setCurrentUser} currentUser={currentUser}/>
+      <NavBar setCurrentUser={setCurrentUser} currentUser={currentUser} setAccountType={setAccountType}/>
       <Routes>
         {currentUser?displayLoged:displayNotLoged}
       </Routes>
