@@ -1,6 +1,6 @@
 class FreelancersController < ApplicationController
     before_action :find_freelancer, only: %i[show]
-    skip_before_action :authorize, only: %i[create]
+    skip_before_action :authorize, only: %i[create show]
     
     def index
         freelancers = Freelancer.all
@@ -21,7 +21,7 @@ class FreelancersController < ApplicationController
     # goes under private
     #to be used with show, update and destroy
     def find_freelancer
-     @freelancer = Freelancer.find_by(id:session[:user_id])
+     @freelancer = Freelancer.find_by(id:session[:freelancer_id])
     end
 
     def free_params

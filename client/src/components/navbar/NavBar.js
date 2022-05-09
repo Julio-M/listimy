@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const NavBar = ({setCurrentUser,currentUser,accountType}) => {
+const NavBar = ({setCurrentUser,currentUser}) => {
   let navigate = useNavigate();
   const pages = ['Products'];
 
@@ -45,7 +45,7 @@ const NavBar = ({setCurrentUser,currentUser,accountType}) => {
  }
 
   const handleLogoutClick = () => {
-    accountType==='user'?logoutUser():logoutFreelancer()
+    currentUser&&currentUser.account_type==='user'?logoutUser():logoutFreelancer()
   }
 
   const settings = [<Link className='profilenav' to='/myprofile'>Profile</Link>, 'Account',<div onClick={handleLogoutClick}>Logout</div>];
