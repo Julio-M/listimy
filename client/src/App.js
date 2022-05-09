@@ -13,7 +13,7 @@ import { isFriday } from 'date-fns';
 function App() {
   let navigate = useNavigate();
 
-  const [accountType,setAccountType]= useState('freelancer')
+  const [accountType,setAccountType]= useState('user')
 
   const [currentUser,setCurrentUser] = useState(null)
 
