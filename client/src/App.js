@@ -68,9 +68,9 @@ function App() {
   const displayLoged = (
         <>
         <Route path="/" element={<LandingPage/>} />
-        <Route path="/places" element={<Places />} />
+        {currentUser&&currentUser.account_type==='user'?<Route path="/places" element={<Places />}/>:null}
         <Route path="/myprofile" element={<UserProfile currentUser={currentUser}/>} />
-        <Route path="/account" element={<EditAccount currentUser={currentUser}/>} />
+        <Route path="/account" element={<EditAccount currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
         </>
     )
 

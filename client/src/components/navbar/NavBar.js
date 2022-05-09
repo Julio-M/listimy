@@ -15,13 +15,12 @@ import { Link } from "react-router-dom";
 import './navbar.css'
 import { useNavigate } from "react-router-dom";
 
-const pages = [<Link to='/places'>Products</Link>];
-const settings = [<Link className='profilenav' to='/myprofile'>Profile</Link>, 'Account','Logout'];
+
 
 
 const NavBar = ({setCurrentUser,currentUser,setAccountType}) => {
   let navigate = useNavigate();
-  const pages = ['Products'];
+  const pages = [<Link to='/places'>Products</Link>];
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
