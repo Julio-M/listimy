@@ -8,7 +8,8 @@ function EditAccount ({currentUser,setCurrentUser}) {
 
     const [editUser, setEditUser] = useState({})
     
-    const [isUp, setIsUp] =useState(false)
+    const [isUpProfile, setIsUpProfile] =useState(false)
+    const [isUpCover, setIsUpCover] =useState(false)
 
     const [myImage, setMyImage] = useState("")
 
@@ -22,7 +23,7 @@ function EditAccount ({currentUser,setCurrentUser}) {
       axios.post("https://api.cloudinary.com/v1_1/dimfaeuml/image/upload",formData,{
           onUploadProgress: progress => {
               if(Math.round(progress.loaded/progress.total*100)===100){
-                setIsUp(false)
+                setIsUpProfile(true)
               }
           }
       })
@@ -39,7 +40,7 @@ function EditAccount ({currentUser,setCurrentUser}) {
       axios.post("https://api.cloudinary.com/v1_1/dimfaeuml/image/upload",formData,{
           onUploadProgress: progress => {
               if(Math.round(progress.loaded/progress.total*100)===100){
-                setIsUp(false)
+                setIsUpCover(true)
               }
           }
       })
@@ -78,13 +79,11 @@ function EditAccount ({currentUser,setCurrentUser}) {
     const handleUpload = (e) =>{
       const file = e.target.files[0]
       setMyImage(file)
-      handleImageSubmit()
   }
 
   const handleCoverUpload = (e) =>{
     const file = e.target.files[0]
     setMyImage(file)
-    handleCoverImageSubmit()
 }
 
     const handleSubmit = (e) => {
@@ -99,11 +98,16 @@ function EditAccount ({currentUser,setCurrentUser}) {
     }
 
     const displayFree = (
-
+      <>
       <div className="user-box">
       <input onChange={handleChange} type="text" name="location"/>
       <label>Location</label>
       </div>
+      <div className="user-box">
+      <input onChange={handleChange} type="text" name="location"/>
+      <label>Service</label>
+      </div>
+      </>
     )
 
     return (
@@ -113,12 +117,14 @@ function EditAccount ({currentUser,setCurrentUser}) {
         <form onSubmit={handleSubmit}>
             <div className="user-box">
             <input onChange={handleUpload} name='profile-picture'type='file'/>
-            <Button onClick={handleImageSubmit} id='go-to-sign-up'>Upload Profile Picture</Button>
+            <Button onClick={handleImageSubmit} className='upload btn-upload' id='btn-upload-profile'>Upload Profile Picture</Button>
+            {isUpProfile?<p className='upload'>Done</p>:null}
             <label>Change your profile picture</label>
             </div>
             <div className="user-box">
             <input onChange={handleCoverUpload} name="cover_photo" type='file'/>
-            <Button onClick={handleCoverImageSubmit} id='go-to-sign-up'>Upload Cover Photo</Button>
+            <Button onClick={handleCoverImageSubmit} className='upload btn-upload'id='btn-upload-cover'>Upload Cover Photo</Button>
+            {isUpCover?<p className='upload'>Done</p>:null}
             <label>Change your cover photo</label>
             </div>
             <div className="user-box">

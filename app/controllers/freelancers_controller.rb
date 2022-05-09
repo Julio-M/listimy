@@ -1,6 +1,6 @@
 class FreelancersController < ApplicationController
-    before_action :find_freelancer, only: %i[show]
-    skip_before_action :authorize, only: %i[create show]
+    before_action :find_freelancer, only: %i[show update]
+    skip_before_action :authorize, only: %i[index create show update]
     
     def index
         freelancers = Freelancer.all
@@ -15,7 +15,12 @@ class FreelancersController < ApplicationController
         freelancer = Freelancer.create!(free_params)
         session[:freelancer_id] = freelancer.id
         render json: freelancer, status: :created
-      end
+    end
+
+    def update
+        @freelancer.update(free_params)
+        render json: @freelancer, status: :accepted
+    end
 
     private
     # goes under private

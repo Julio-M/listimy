@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   #freelancers start
   post "/signup-freelancer", to: "freelancers#create"
   get '/me-freelancer', to: 'freelancers#show'
+  patch '/me-freelancer', to: 'freelancers#update'
   
 
   post '/login-freelancer', to: 'sessions#create_freelancer'
