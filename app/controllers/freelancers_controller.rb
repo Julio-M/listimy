@@ -1,6 +1,6 @@
 class FreelancersController < ApplicationController
     before_action :find_freelancer, only: %i[show]
-    skip_before_action :authorize, only: %i[create show]
+    skip_before_action :authorize, only: %i[index create show]
     
     def index
         freelancers = Freelancer.all
