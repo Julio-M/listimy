@@ -34,6 +34,8 @@ const style = {
 
 function UserProfile ({currentUser}) {
 
+  const [myServices, setMyServices] = useState(currentUser.services)
+
   const [which, setWhich] = useState('profile')
 
   const [open, setOpen] = React.useState(false);
@@ -55,7 +57,6 @@ function UserProfile ({currentUser}) {
   };
 
 
-  console.log(currentUser)
 
   const displayFreelanceAddOns = (
       <>
@@ -68,7 +69,7 @@ function UserProfile ({currentUser}) {
         <Grid id='services-prices' item xs={6}>
           <Item className='title-comp'>Services & Prices <Button onClick={handleOpenService}>+ Add Service</Button></Item>
           <Item className='services-cont'>
-            <ServiceTable currentUser={currentUser}/>
+            <ServiceTable myServices={myServices}/>
           </Item>
           <Item><Button>Book an appointment</Button></Item>
         </Grid>
@@ -136,7 +137,7 @@ function UserProfile ({currentUser}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <ServiceForm currentUser={currentUser}/>
+          <ServiceForm currentUser={currentUser} setMyServices={setMyServices} myServices={myServices}/>
         </Box>
       </Modal>
     </div>

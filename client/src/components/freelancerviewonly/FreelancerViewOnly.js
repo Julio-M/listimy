@@ -34,6 +34,8 @@ const style = {
 
 function FreelancerViewOnly ({currentUser}) {
 
+  const [myServices, setMyServices] = useState(currentUser.services)
+
   const [which, setWhich] = useState('profile')
 
   const [open, setOpen] = React.useState(false);
@@ -61,7 +63,7 @@ function FreelancerViewOnly ({currentUser}) {
         <Grid id='services-prices' item xs={6}>
           <Item className='title-comp'>Services & Prices</Item>
           <Item className='services-cont'>
-            <ServiceTable currentUser={currentUser}/>
+            <ServiceTable myServices={myServices}/>
           </Item>
           <Item><Button>Book an appointment</Button></Item>
         </Grid>
