@@ -9,16 +9,15 @@ import './places.css'
 import { useLoadScript } from "@react-google-maps/api"
 
 
-const Places = ({freelancerData, services, setServices}) => {
-
-    
+const Places = ({freelancerData, services, setServices, setViewFreelancer}) => {
 
     const {isLoaded} = useLoadScript({
         googleMapsApiKey: "",
         libraries: ["places"]
     })
-    
-    
+
+    console.log('At first',freelancerData.errors)
+
     return (
         <div>
             <Browse/>
@@ -26,11 +25,11 @@ const Places = ({freelancerData, services, setServices}) => {
             <Grid container spacing={2}>
                 <Grid xs={12} md={4}>
                 <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                    {freelancerData.map(freelancer => {
+                    {freelancerData.length!==0?freelancerData.map(freelancer => {
                         return (
-                            <Services freelancer={freelancer}/>
+                            <Services setViewFreelancer={setViewFreelancer} freelancer={freelancer}/>
                         )
-                    })}
+                    }):<h1>Loading.....</h1>}
                 </List>
                 </Grid>
                 <Grid xs={12} md={8}>
