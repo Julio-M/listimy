@@ -16,10 +16,12 @@ function App() {
   let navigate = useNavigate();
 
   const [accountType,setAccountType]= useState('user')
-
   const [currentUser,setCurrentUser] = useState(null)
+  const [freelancerData, setFreelancerData] = useState([])
+  const [services, setServices] = useState([])
 
-  console.log(accountType)
+  
+  
 
   //retain user start
   const retainUser = () => {
@@ -65,11 +67,17 @@ function App() {
     retainUser()
   }, []);
 
+  useEffect(() => {
+    fetch ('/freelancers')
+    .then (res => res.json())
+    .then (setFreelancerData)
+  },[])
+
 
   const displayLoged = (
         <>
         <Route path="/" element={<LandingPage/>} />
-        {currentUser&&currentUser.account_type==='user'?<Route path="/places" element={<Places />}/>:null}
+        {currentUser&&currentUser.account_type==='user'?<Route path="/places" element={<Places freelancerData={freelancerData} services={services} setServices={setServices}/>}/>:null}
         <Route path="/myprofile" element={<UserProfile currentUser={currentUser}/>} />
         <Route path="/account" element={<EditAccount currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
         </>

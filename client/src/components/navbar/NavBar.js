@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 
 const NavBar = ({setCurrentUser,currentUser,setAccountType}) => {
   let navigate = useNavigate();
+  
   const pages = [<Link to='/places'>Products</Link>];
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);

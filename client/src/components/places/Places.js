@@ -4,27 +4,37 @@ import Services from "./Services";
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import List from '@mui/material/List';
 import './places.css'
 import { useLoadScript } from "@react-google-maps/api"
 
 
-const Places = () => {
+const Places = ({freelancerData, services, setServices}) => {
+
+    
 
     const {isLoaded} = useLoadScript({
-        googleMapsApiKey: ""
+        googleMapsApiKey: "",
+        libraries: ["places"]
     })
     
     
     return (
         <div>
-            <Browse />
+            <Browse/>
             <div className="map">
             <Grid container spacing={2}>
                 <Grid xs={12} md={4}>
-                    <Services />
+                <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                    {freelancerData.map(freelancer => {
+                        return (
+                            <Services freelancer={freelancer}/>
+                        )
+                    })}
+                </List>
                 </Grid>
                 <Grid xs={12} md={8}>
-                {!isLoaded ? <div>Loading...</div> : <Maps />}
+                {!isLoaded ? <div>Loading...</div> : <Maps freelancerData={freelancerData} services={services} setServices={setServices}/>}
                 </Grid>
             </Grid>
             </div>
