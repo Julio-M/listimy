@@ -5,10 +5,10 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Button } from "@mui/material";
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import ServiceTable from "../servicestable/ServiceTable";
-import ServiceForm from "../servicestable/ServiceForm";
+import BookingForm from "../bookingtable/BookingForm";
+import BookingTable from "../bookingtable/BookingTable";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -36,7 +36,16 @@ function FreelancerViewOnly ({currentUser}) {
 
   const [myServices, setMyServices] = useState(currentUser.services)
 
+  const [myBookings, setMyBookings] = useState(currentUser.bookings)
+
+
   const [which, setWhich] = useState('profile')
+
+  const handleOpenService = () => {
+    setOpenService(true)
+  }
+
+  const [openService,setOpenService] = useState(false)
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = (e) => {
@@ -47,6 +56,7 @@ function FreelancerViewOnly ({currentUser}) {
 
   const handleClose = () => {
     setOpen(false)
+    setOpenService(false)
   };
 
 
@@ -65,7 +75,7 @@ function FreelancerViewOnly ({currentUser}) {
           <Item className='services-cont'>
             <ServiceTable myServices={myServices}/>
           </Item>
-          <Item><Button>Book an appointment</Button></Item>
+          <Item><Button onClick={handleOpenService}>Book an appointment</Button></Item>
         </Grid>
         <Grid item xs={4}>
           <Item>About</Item>
@@ -97,7 +107,10 @@ function FreelancerViewOnly ({currentUser}) {
         </div>
         </Grid>
         <Grid item xs={12}>
-          <Item>Previous bookings</Item>
+          <Item className='title-comp-free'>Bookings</Item>
+          <Item className='services-cont-book'>
+            <BookingTable myBookings={myBookings}/>
+          </Item>
         </Grid>
         {currentUser&&currentUser.account_type==='user'?null:displayFreelanceAddOns}
         <Grid item xs={6}>
@@ -122,6 +135,20 @@ function FreelancerViewOnly ({currentUser}) {
         </Box>
       </Modal>
     </div>
+
+    <div>
+    <Modal
+        open={openService}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <BookingForm currentUser={currentUser} setMyServices={setMyServices}/>
+        </Box>
+      </Modal>
+    </div>
+
     </>
     );
 }

@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
   
-  resources :bookings
+  resources :bookings, path:'/bookings'
   resources :reviews
   resources :services
   resources :categories
   resources :freelancers
   resources :users 
+
   # Routing logic: fallback requests for React Router.
 
   #users start
