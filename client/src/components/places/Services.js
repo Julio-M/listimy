@@ -10,10 +10,21 @@ import Typography from '@mui/material/Typography';
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Geocode from "react-geocode";
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Collapse from '@mui/material/Collapse';
+import List from '@mui/material/List';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Tooltip from '@mui/material/Tooltip';
 
 const Services = ({setCenter, freelancer,setViewFreelancer}) => {
     let navigate = useNavigate();
     const [errors, setErrors] = useState([]);
+    const [expanded, setExpanded] = useState(false)
+
+    const handleExpandClick = () => {
+        setExpanded(!expanded)
+    }
 
     const postDataFreelancer = () => {
       fetch(`/show-freelancer`, {
@@ -48,31 +59,58 @@ const Services = ({setCenter, freelancer,setViewFreelancer}) => {
     }
     
     return (
-      <ListItemButton onClick={handleClick} alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="profile picture" src= {freelancer.profile_picture} />
-        </ListItemAvatar>
-        <ListItemText
-          primary={freelancer.services.map((service)=>service.service_name)}
-          secondary={
-            <>
-              <Typography
-                sx={{ display: 'inline' }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                {freelancer.username}
-              </Typography>
-              {freelancer.location?freelancer.location:freelancer.location="144 Fulton St, New York, NY, 10038"}
-              <Button onClick={handleNavigate}>Go to profile</Button>
-              <div> {errors.map((err) => (
-              <p key={err}>{err}</p>
-                ))}</div>
-            </>
-          }
-        />
-      </ListItemButton>
+        <>
+            <ListItemButton onClick={handleClick} alignItems="flex-start">
+                <ListItemAvatar>
+                <Avatar alt="profile picture" src= {freelancer.profile_picture} />
+                </ListItemAvatar>
+                <ListItemText
+                primary={freelancer.username}
+                secondary={
+                    <>
+                    <Typography
+                        sx={{ display: 'inline' }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                    >
+                       
+                    {freelancer.location?freelancer.location:freelancer.location="144 Fulton St, New York, NY, 10038"}
+                    </Typography>
+                    </>
+                }
+                />
+            <Tooltip title="Click for more">
+                <ExpandMore
+                expand={expanded}
+                onClick={handleExpandClick}
+                >
+                    <ExpandMoreIcon />
+                </ExpandMore>
+            </Tooltip>
+            </ListItemButton>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+               
+               
+                {freelancer.services.map((service) => {
+                    return (
+                    <>
+                    <ListItemText primary={service.service_name} />
+                    <Divider/>
+                    </>    
+                    )
+                })}
+                
+                <Button onClick={handleNavigate}>Go to profile</Button>
+                    <div> {errors.map((err) => (
+                        <p key={err}>{err}</p>
+                            ))}
+                    </div>
+               
+            </List>
+            </Collapse>
+        </>
     )
     
 }

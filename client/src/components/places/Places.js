@@ -13,6 +13,8 @@ import { useLoadScript } from "@react-google-maps/api"
 const Places = ({freelancerData, services, setServices, setViewFreelancer}) => {
 
     const [center, setCenter] = useState({lat: 44, lng: -80})
+    const [selected, setSelected] = useState(null)
+
     const {isLoaded} = useLoadScript({
         googleMapsApiKey: "AIzaSyDoIZLoWdlpEK-wreROwlqh01Yg3bfPkpM",
         libraries: ["places"]
@@ -21,8 +23,9 @@ const Places = ({freelancerData, services, setServices, setViewFreelancer}) => {
   
 
     return (
-        <div>
-            <Browse/>
+        <Box sx={{px:5}}>
+
+            <Browse setSelected={setSelected} selected={selected} setCenter={setCenter}/>
             <div className="map">
             <Grid container spacing={2}>
                 <Grid xs={12} md={4}>
@@ -35,11 +38,12 @@ const Places = ({freelancerData, services, setServices, setViewFreelancer}) => {
                 </List>
                 </Grid>
                 <Grid xs={12} md={8}>
-                {!isLoaded ? <div>Loading...</div> : <Maps center={center} setCenter={setCenter} freelancerData={freelancerData} services={services} setServices={setServices}/>}
+                {!isLoaded ? <div>Loading...</div> : <Maps selected={selected} center={center} setCenter={setCenter} freelancerData={freelancerData} services={services} setServices={setServices}/>}
                 </Grid>
             </Grid>
             </div>
-        </div>
+        </Box>
+        
       
     )
 }
