@@ -9,22 +9,26 @@ import Paper from '@mui/material/Paper';
 
 function BookingTable ({myBookings}) {
 
+  console.log('bookings',myBookings)
+
+  const displayBookings = myBookings.map((row) => (
+    <TableRow
+      key={row.id}
+      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+    >
+      <TableCell component="th" scope="row">
+        {row.user.username}
+      </TableCell>
+      <TableCell align="right">{row.freelancer.username}</TableCell>
+      <TableCell align="right">{row.booking_date}</TableCell>
+    </TableRow>
+  ))
 
     return (
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: "100%"}} aria-label="simple table">
           <TableBody>
-            {myBookings.map((row) => (
-              <TableRow
-                key={row.service_name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.service_name}
-                </TableCell>
-                <TableCell align="right">${row.service_price}</TableCell>
-              </TableRow>
-            ))}
+            {myBookings?displayBookings:<p>No bookings</p>}
           </TableBody>
         </Table>
     </TableContainer>

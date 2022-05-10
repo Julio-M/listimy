@@ -86,7 +86,7 @@ function App() {
         <>
         <Route path="/" element={<LandingPage/>} />
         {currentUser&&currentUser.account_type==='user'?<Route path="/places" element={<Places freelancerData={freelancerData} services={services} setServices={setServices} setViewFreelancer={setViewFreelancer} viewFreelancer={viewFreelancer}/>}/>:null}
-        {currentUser&&!freelancerData.errors&&viewFreelancer&&currentUser.account_type==='user'?<Route path="/freelancer" element={<FreelancerViewOnly currentUser={viewFreelancer} />}/>:null}
+        {currentUser&&!freelancerData.errors&&viewFreelancer&&currentUser.account_type==='user'?<Route path="/freelancer" element={<FreelancerViewOnly viewFreelancer={viewFreelancer} currentUser={currentUser}/>}/>:null}
         <Route path="/myprofile" element={<UserProfile currentUser={currentUser}/>} />
         <Route path="/account" element={<EditAccount currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
         </>

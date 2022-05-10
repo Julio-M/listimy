@@ -34,7 +34,14 @@ const style = {
 
 function UserProfile ({currentUser}) {
 
-  const [myBookings, setMyBookings] = useState(currentUser.bookings)
+  const [myBookings, setMyBookings] = useState([])
+
+  useEffect( () => {
+   fetch(`bookings/users/${currentUser.id}`)
+   .then( res => res.json())
+   .then( data => setMyBookings(data))
+   .catch( error => console.log(error.message));
+  },[])
 
   const [myServices, setMyServices] = useState(currentUser.services)
 
@@ -70,25 +77,19 @@ function UserProfile ({currentUser}) {
   const displayFreelanceAddOns = (
         <>
         <Grid id='photo-grid' item xs={6}>
-          <Item className='title-comp-free'>Photo Album</Item>
+          <Item className='title-comp'>Photo Album</Item>
           <Item id='service-photos'>
-          <img className='service-pics' src={currentUser.services_photos} alt='color'/>
+          <img className='service-pics' src={currentUser.services_photos} alt='service'/>
           </Item>
         </Grid>
-        <Grid id='services-prices' item xs={6}>
+        <Grid zeroMinWidth id='services-prices' item xs={6}>
           <Item className='title-comp-free'>Services & Prices <Button onClick={handleOpenService}>+ Add Service</Button></Item>
           <Item className='services-cont-free'>
             <ServiceTable myServices={myServices}/>
           </Item>
         </Grid>
-        <Grid item xs={4}>
-          <Item>About</Item>
-        </Grid>
-        <Grid item xs={4}>
+        <Grid zeroMinWidth item xs={12}>
           <Item>Map</Item>
-        </Grid>
-        <Grid item xs={4}>
-          <Item>Contact Info</Item>
         </Grid>
        </>
   )
@@ -96,11 +97,11 @@ function UserProfile ({currentUser}) {
     return (
       <>
       <Box className='profilepage'>
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         <Grid item xs={12}>
           <img className='cover-photo' name='cover'onClick={handleOpen} src={currentUser.cover_photo} alt='cover'/>
         </Grid>
-        <Grid item xs={4}>
+        <Grid zeroMinWidth item xs={4}>
         <div className='profile'>
         <img className='profile-picture' name='profile' onClick={handleOpen} src={currentUser.profile_picture} alt='profile'/>
           <div className='presonalinfo'>
@@ -110,17 +111,17 @@ function UserProfile ({currentUser}) {
           </div>
         </div>
         </Grid>
-        <Grid item xs={12}>
+        <Grid zeroMinWidth item xs={12}>
           <Item className='title-comp-free'>Bookings {currentUser.account_type==='freelancer'?<Button onClick={handleOpenBooking}>| Edit Bookings |</Button>:null}</Item>
           <Item className='services-cont-book'>
             <BookingTable myBookings={myBookings}/>
           </Item>
         </Grid>
         {currentUser&&currentUser.account_type==='user'?null:displayFreelanceAddOns}
-        <Grid item xs={6}>
+        <Grid zeroMinWidth item xs={6}>
           <Item>Reviews</Item>
         </Grid>
-        <Grid item xs={6}>
+        <Grid zeroMinWidth item xs={6}>
           <Item>Chat</Item>
         </Grid>
       </Grid>
