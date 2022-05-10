@@ -3,7 +3,6 @@ import './cards.css'
 import Paper from '@mui/material/Paper';
 
 function Cards ({categories}) {
-  console.log(categories)
   const {category_picture,category_name} = categories
 
     return (

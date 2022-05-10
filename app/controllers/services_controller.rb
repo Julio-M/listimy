@@ -1,7 +1,7 @@
 class ServicesController < ApplicationController
     before_action :find_service, only: %i[show]
-    skip_before_action :authorize, only: %i[index show]
-    skip_before_action :authorize_freelancer, only: %i[create index]
+    skip_before_action :authorize, only: %i[index show create]
+    skip_before_action :authorize_freelancer, only: %i[create show index]
     
     def index
         services = Service.all
@@ -13,13 +13,8 @@ class ServicesController < ApplicationController
     end
 
     def create
-        if @current_user
-            new_service = @current_user.services.create!(service_params)
-            render json: new_service, status: :created
-        else
-            new_service = @current_freelancer.services.create!(service_params)
-            render json: new_service, status: :created
-        end
+        new_service = Service.create!(service_params)
+        render json: new_service, status: :created
       end
 
     private
@@ -30,6 +25,6 @@ class ServicesController < ApplicationController
     end
 
     def service_params
-        params.permit(:title, :instructions, :minutes_to_complete)
+        params.permit(:service_name, :service_price, :category_id,:freelancer_id)
     end
 end
