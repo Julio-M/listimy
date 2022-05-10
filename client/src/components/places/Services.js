@@ -9,8 +9,9 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Geocode from "react-geocode";
 
-const Services = ({freelancer,setViewFreelancer}) => {
+const Services = ({setCenter, freelancer,setViewFreelancer}) => {
     let navigate = useNavigate();
     const [errors, setErrors] = useState([]);
 
@@ -33,6 +34,13 @@ const Services = ({freelancer,setViewFreelancer}) => {
     const handleClick = () => {
       setViewFreelancer(freelancer)
       postDataFreelancer()
+      Geocode.fromAddress(freelancer.location).then(
+        res => {
+            const {lat, lng} = res.results[0].geometry.location
+            console.log({lat, lng})
+            setCenter({lat, lng})
+        }
+        )
     }
 
     const handleNavigate = () => {

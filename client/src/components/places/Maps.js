@@ -9,12 +9,12 @@ import Geocode from "react-geocode";
 
 
 
-const Maps = ({freelancerData, services, setServices}) => {
+const Maps = ({freelancerData, services, setServices, center, setCenter}) => {
     
-    Geocode.setApiKey('')
-    console.log('What the data looks like')
+    Geocode.setApiKey('AIzaSyDoIZLoWdlpEK-wreROwlqh01Yg3bfPkpM')
+    
     const [selected, setSelected] = useState(null)
-    const [center, setCenter] = useState({lat: 44, lng: -80})
+    
     const mapRef = useRef()
 
     const onLoad = useCallback(map => mapRef.current = map, [])
@@ -50,10 +50,11 @@ const Maps = ({freelancerData, services, setServices}) => {
         >
           {selected && (
           <>
-          <Marker position={selected} />
           {services.map(service => <Marker position={service}/>)}
+          <Marker position={selected} />
           </> 
           )}
+          <Marker position={center} />
         </GoogleMap>
         </>
     )
