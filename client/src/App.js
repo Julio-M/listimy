@@ -6,19 +6,20 @@ import LandingPage from './components/landingpage/LandingPage';
 import Login from './components/login/Login';
 import SignupUser from './components/signup/SignupUser';
 import UserProfile from './components/profiles/UserProfile';
-import { useNavigate } from "react-router-dom";
 import Places from './components/places/Places';
+import FreelancerViewOnly from './components/freelancerviewonly/FreelancerViewOnly';
 
 
 import EditAccount from './components/editaccount/EditAccount';
 
 function App() {
-  let navigate = useNavigate();
 
   const [accountType,setAccountType]= useState('user')
   const [currentUser,setCurrentUser] = useState(null)
   const [freelancerData, setFreelancerData] = useState([])
   const [services, setServices] = useState([])
+
+  const [viewFreelancer, setViewFreelancer] = useState(null)
 
   
   
@@ -38,18 +39,18 @@ function App() {
   ////retain user end
 
 
-  //retain freelancer start
-  // const retainFreelancer = () => {
-  //   fetch("/me-freelancer").then((r) => {
-  //     if (r.ok) {
-  //       r.json().then((user) => {
-  //         setCurrentUser(user)
-  //       })
-  //     } else{
-  //       console.log(currentUser)
-  //     }
-  //   })
-  // }
+  // retain freelancer start
+  const retainFreelancer = () => {
+    fetch(`/me-freelancer`).then((r) => {
+      if (r.ok) {
+        r.json().then((user) => {
+          setViewFreelancer(user)
+        })
+      } else{
+        console.log('Not good')
+      }
+    })
+  }
 
   // console.log('Is this ture',retainUser()===undefined)
   ////retain freelancer end
@@ -65,19 +66,27 @@ function App() {
     //   }
     // })
     retainUser()
+    retainFreelancer()
   }, []);
 
   useEffect(() => {
     fetch ('/freelancers')
-    .then (res => res.json())
-    .then (setFreelancerData)
+    .then (res => {
+      if (res.ok) {
+      res.json().then((data) => setFreelancerData(data))
+    } else {
+      console.log(res.json())
+    }
+  })
   },[])
+
 
 
   const displayLoged = (
         <>
         <Route path="/" element={<LandingPage/>} />
-        {currentUser&&currentUser.account_type==='user'?<Route path="/places" element={<Places freelancerData={freelancerData} services={services} setServices={setServices}/>}/>:null}
+        {currentUser&&currentUser.account_type==='user'?<Route path="/places" element={<Places freelancerData={freelancerData} services={services} setServices={setServices} setViewFreelancer={setViewFreelancer} viewFreelancer={viewFreelancer}/>}/>:null}
+        {currentUser&&!freelancerData.errors&&viewFreelancer&&currentUser.account_type==='user'?<Route path="/freelancer" element={<FreelancerViewOnly currentUser={viewFreelancer} />}/>:null}
         <Route path="/myprofile" element={<UserProfile currentUser={currentUser}/>} />
         <Route path="/account" element={<EditAccount currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
         </>
@@ -89,7 +98,6 @@ function App() {
         <Route path="/signup-user" element={<SignupUser onLogin={setCurrentUser} accountType={accountType} setAccountType={setAccountType}/>} />
     </>
   )
-
 
   return (
     <div className='app' >

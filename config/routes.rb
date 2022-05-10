@@ -20,10 +20,10 @@ Rails.application.routes.draw do
 
   #freelancers start
   post "/signup-freelancer", to: "freelancers#create"
-  # get '/me-freelancer', to: 'freelancers#show'
+  get '/me-freelancer', to: 'freelancers#show'
   # patch '/me-freelancer', to: 'freelancers#update'
   
-
+  post '/show-freelancer', to: 'sessions#create_view_freelancer'
   post '/login-freelancer', to: 'sessions#create_freelancer'
   delete '/logout-freelancer', to: 'sessions#destroy_freelancer'
   #freelancers end

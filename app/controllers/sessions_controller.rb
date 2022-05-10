@@ -37,6 +37,15 @@ class SessionsController < ApplicationController
     head :no_content
   end
 
+  def create_view_freelancer
+    freelancer = Freelancer.find(params[:id])
+    if freelancer
+      session[:view_freelancer_id] = freelancer.id
+      render json: freelancer
+    end
+
+  end
+
   #freelancerts end
 
 end
