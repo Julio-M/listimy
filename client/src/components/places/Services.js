@@ -27,7 +27,7 @@ const Services = ({freelancer}) => {
               >
                 {freelancer.username}
               </Typography>
-              {freelancer.location}
+              {freelancer.location?freelancer.location:freelancer.location="144 Fulton St, New York, NY, 10038"}
             </>
           }
         />
