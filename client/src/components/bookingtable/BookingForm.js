@@ -5,28 +5,16 @@ import MenuItem from '@mui/material/MenuItem';
 import { Button } from "@mui/material";
 import FormControl from '@mui/material/FormControl';
 
-function ServiceForm ({currentUser,setMyServices,myServices}) {
+function BookingForm ({currentUser,setMyServices,myServices}) {
     const [errors, setErrors] = useState([]);
 
-    const [categories,setCategories] = useState([])
-
-    const getData = () => {
-      fetch(`http://127.0.0.1:3000/categories`)
-      .then( res => res.json())
-      .then( data => setCategories(data))
-      .catch( error => console.log(error.message));
-    }
-
-    useEffect( () => {
-    getData()
-    },[])
-
+    console.log('Service',currentUser.services)
 
     const [formData, setFormData] = useState({
-      service_name: "",
-      service_price: 0,
-      category_id: 0,
-      freelancer_id:currentUser.id
+      service_id: 0,
+      user_id:currentUser.id,
+      freelancer_id:currentUser.id,
+      booking_date:'05/17/2022'
     })
 
     ///service-create
@@ -55,7 +43,7 @@ function ServiceForm ({currentUser,setMyServices,myServices}) {
       setFormData({...formData, [name]:value})
     }
 
-    const displayOptions = categories.map(cat => <MenuItem key={cat.id} value={cat.id}>{cat.category_name}</MenuItem> )
+    const displayServices = currentUser.services.map(serv =><MenuItem key={serv.id} value={serv.id}>{serv.service_name}</MenuItem> )
 
     const handleSubmit = (e) => {
       e.preventDefault()
@@ -73,21 +61,20 @@ function ServiceForm ({currentUser,setMyServices,myServices}) {
       noValidate
       autoComplete="off"
     >
-            <TextField onChange={handleChange} id="outlined-basic" name='service_name' label="Service" variant="outlined" value={formData.service_name} /> 
-            <TextField onChange={handleChange} id="outlined-basic" name='service_price' label="Price" variant="outlined" type='number' value={formData.service_price} /> 
             <TextField
           name='category_id'
           id="filled-select-currency"
           select
           label="Select"
-          value={formData.category_id}
+          value={formData.ser}
           onChange={handleChange}
           helperText="Please select your category"
           variant="filled"
         >
-            {displayOptions}
+            {displayServices}
         </TextField>
-        <Button type='submit'>Add</Button>
+            <TextField onChange={handleChange} id="outlined-basic" name='service_price' label="Choose a date" variant="outlined" type='number' value={formData.service_price} /> 
+        <Button type='submit'>Request Booking</Button>
         <div>{errors.map((err) => (
                 <p>{err}</p>
             ))}</div>
@@ -96,4 +83,4 @@ function ServiceForm ({currentUser,setMyServices,myServices}) {
     );
 }
 
-export default ServiceForm;
+export default BookingForm;

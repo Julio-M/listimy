@@ -7,14 +7,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-function ServiceTable ({myServices}) {
+function BookingTable ({myBookings}) {
 
 
     return (
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: "100%"}} aria-label="simple table">
           <TableBody>
-            {myServices.map((row) => (
+            {myBookings.map((row) => (
               <TableRow
                 key={row.service_name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -31,4 +31,4 @@ function ServiceTable ({myServices}) {
     );
 }
 
-export default ServiceTable;
+export default BookingTable;

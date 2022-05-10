@@ -21,7 +21,7 @@ class ServicesController < ApplicationController
     # goes under private
     #to be used with show, update and destroy
     def find_service
-     @service = Service.find(params[:id])
+     @service = Service.where(freelancer_id:params[:id])
     end
 
     def service_params

@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import './userprofile.css'
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Button } from "@mui/material";
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import ServiceTable from "../servicestable/ServiceTable";
 import ServiceForm from "../servicestable/ServiceForm";
+import BookingTable from "../bookingtable/BookingTable"
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -34,9 +34,14 @@ const style = {
 
 function UserProfile ({currentUser}) {
 
+  const [myBookings, setMyBookings] = useState(currentUser.bookings)
+
+  const [myServices, setMyServices] = useState(currentUser.services)
+
   const [which, setWhich] = useState('profile')
 
   const [open, setOpen] = React.useState(false);
+
   const handleOpen = (e) => {
     const name = e.target.name
     setWhich(name)
@@ -47,30 +52,34 @@ function UserProfile ({currentUser}) {
     setOpenService(true)
   }
 
+  const handleOpenBooking = () => {
+    setOpenBooking(true)
+  }
+
   const [openService,setOpenService] = useState(false)
+  const [openBooking,setOpenBooking] = useState(false)
 
   const handleClose = () => {
     setOpen(false)
     setOpenService(false)
+    setOpenBooking(false)
   };
 
 
-  console.log(currentUser)
 
   const displayFreelanceAddOns = (
-      <>
+        <>
         <Grid id='photo-grid' item xs={6}>
-          <Item className='title-comp'>Photo Album</Item>
+          <Item className='title-comp-free'>Photo Album</Item>
           <Item id='service-photos'>
           <img className='service-pics' src={currentUser.services_photos} alt='color'/>
           </Item>
         </Grid>
         <Grid id='services-prices' item xs={6}>
-          <Item className='title-comp'>Services & Prices <Button onClick={handleOpenService}>+ Add Service</Button></Item>
-          <Item className='services-cont'>
-            <ServiceTable currentUser={currentUser}/>
+          <Item className='title-comp-free'>Services & Prices <Button onClick={handleOpenService}>+ Add Service</Button></Item>
+          <Item className='services-cont-free'>
+            <ServiceTable myServices={myServices}/>
           </Item>
-          <Item><Button>Book an appointment</Button></Item>
         </Grid>
         <Grid item xs={4}>
           <Item>About</Item>
@@ -102,7 +111,10 @@ function UserProfile ({currentUser}) {
         </div>
         </Grid>
         <Grid item xs={12}>
-          <Item>Previous bookings</Item>
+          <Item className='title-comp-free'>Bookings {currentUser.account_type==='freelancer'?<Button onClick={handleOpenBooking}>| Edit Bookings |</Button>:null}</Item>
+          <Item className='services-cont-book'>
+            <BookingTable myBookings={myBookings}/>
+          </Item>
         </Grid>
         {currentUser&&currentUser.account_type==='user'?null:displayFreelanceAddOns}
         <Grid item xs={6}>
@@ -127,8 +139,8 @@ function UserProfile ({currentUser}) {
         </Box>
       </Modal>
     </div>
+    
     <div>
-
     <Modal
         open={openService}
         onClose={handleClose}
@@ -136,7 +148,20 @@ function UserProfile ({currentUser}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <ServiceForm currentUser={currentUser}/>
+          <ServiceForm currentUser={currentUser} setMyServices={setMyServices} myServices={myServices}/>
+        </Box>
+      </Modal>
+    </div>
+
+    <div>
+    <Modal
+        open={openBooking}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          {/* {BookingCalendar} */}
         </Box>
       </Modal>
     </div>
