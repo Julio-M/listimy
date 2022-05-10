@@ -1,6 +1,8 @@
 class CategoriesController < ApplicationController
     before_action :find_category, only: %i[show]
     skip_before_action :authorize, only: %i[index show]
+    skip_before_action :authorize_freelancer, only: %i[index show]
+    
     
     def index
         categories = Category.all

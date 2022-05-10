@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
   rescue_from ActiveRecord::RecordInvalid,with: :render_invalid
 
-  before_action :authorize
+  before_action :authorize, :authorize_freelancer
 
   private
 
@@ -12,6 +12,12 @@ class ApplicationController < ActionController::API
     @current_user = User.find_by(id: session[:user_id])
 
     render json: { errors: ["Not authorized"] }, status: :unauthorized unless @current_user
+  end
+
+  def authorize_freelancer
+    @current_freelancer = Freelancer.find_by(id: session[:user_id])
+
+    render json: { errors: ["Not authorized"] }, status: :unauthorized unless @current_freelancer
   end
 
   def render_not_found
