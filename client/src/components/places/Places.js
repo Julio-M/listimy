@@ -10,16 +10,16 @@ import {useState, useEffect} from "react"
 import { useLoadScript } from "@react-google-maps/api"
 
 
-const Places = ({searchParams, freelancerData, services, setServices, setViewFreelancer}) => {
+const Places = ({setFreelancerData, searchParams, freelancerData, services, setServices, setViewFreelancer}) => {
 
     const [center, setCenter] = useState({lat: 40.70705345683868, lng: -74.01128952515276})
-   
+    const [centerMarker, setCenterMarker] = useState([])
     const [selected, setSelected] = useState(null)
     const [searchName, setSearchName] = useState("")
     const query = searchParams.get('category_name')
     
     const {isLoaded} = useLoadScript({
-        googleMapsApiKey: "",
+        googleMapsApiKey: "AIzaSyDoIZLoWdlpEK-wreROwlqh01Yg3bfPkpM",
         libraries: ["places"]
     })
 
@@ -45,13 +45,13 @@ const Places = ({searchParams, freelancerData, services, setServices, setViewFre
                 <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
                     {freelancerData.length!==0?filtered.map(freelancer => {
                         return (
-                            <Services setSelected={setSelected} setCenter={setCenter} setViewFreelancer={setViewFreelancer} freelancer={freelancer}/>
+                            <Services setCenterMarker={setCenterMarker} setCenter={setCenter} setViewFreelancer={setViewFreelancer} freelancer={freelancer}/>
                         )
                     }):<h1>Loading.....</h1>}
                 </List>
                 </Grid>
                 <Grid xs={12} md={8}>
-                {!isLoaded ? <div>Loading...</div> : <Maps selected={selected} center={center} setCenter={setCenter} freelancerData={freelancerData} services={services} setServices={setServices}/>}
+                {!isLoaded ? <div>Loading...</div> : <Maps setFreelancerData={setFreelancerData} centerMarker={centerMarker} filtered={filtered} selected={selected} center={center} setCenter={setCenter} freelancerData={freelancerData} services={services} setServices={setServices}/>}
                 </Grid>
             </Grid>
             </div>

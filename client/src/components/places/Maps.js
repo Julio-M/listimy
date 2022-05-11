@@ -9,12 +9,13 @@ import Geocode from "react-geocode";
 
 
 
-const Maps = ({selected, freelancerData, services, setServices, center, setCenter}) => {
+const Maps = ({setFreelancerData, centerMarker, filtered, selected, freelancerData, services, setServices, center, setCenter}) => {
     
-    Geocode.setApiKey('')
+    Geocode.setApiKey('AIzaSyDoIZLoWdlpEK-wreROwlqh01Yg3bfPkpM')
     
     const mapRef = useRef()
     const [activeMarker, setActiveMarker] = useState(null)
+    
 
     const onLoad = useCallback(map => mapRef.current = map, [])
     
@@ -31,6 +32,19 @@ const Maps = ({selected, freelancerData, services, setServices, center, setCente
         setServices(listServices)
     }, [])
   
+    // const handleServiceFilter = (service) => {
+    //     const findThis = freelancerData.filter(freelancer => {
+    //         let query = Geocode.fromLatLng(service.lat, service.lng).then(
+    //             response => {
+    //                 const address = response.results[0].formatted_address
+    //                 return address
+    //             }
+    //         )
+    //         return freelancer.location.toLowerCase() === query
+    //     })
+    //     setFreelancerData(findThis)
+    // }
+
     return (
         <>
         <GoogleMap
@@ -45,15 +59,8 @@ const Maps = ({selected, freelancerData, services, setServices, center, setCente
           {services.map(service => {
             return (
                
-                <Marker position={service} onClick={()=>setActiveMarker({service})} >
-                   {activeMarker 
-                        ? 
-                        <InfoWindow position={center} visible={true} onCloseClick={()=>setActiveMarker(null)}>
-                            <div>Service: Info</div>
-                        </InfoWindow>
-                        :
-                        null
-                    }
+                <Marker position={service} >
+                 
                 </Marker>
                
             )
@@ -62,7 +69,16 @@ const Maps = ({selected, freelancerData, services, setServices, center, setCente
            
           </> 
           )}
-          <Marker position={center} />
+          <Marker position={center} onClick={()=>setActiveMarker({center})}>
+            {activeMarker 
+                ? 
+                <InfoWindow position={center} visible={true} onCloseClick={()=>setActiveMarker(null)}>
+                     <div>{centerMarker.username}</div>
+                </InfoWindow>
+                :
+                null
+            }
+          </Marker>
         </GoogleMap>
         </>
     )
