@@ -35,6 +35,8 @@ Rails.application.routes.draw do
 
   #services end
 
+  get '/bookings/users/:id', to: 'bookings#show_user_booking'
+
 
   # Leave this here to help deploy your app later!
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }

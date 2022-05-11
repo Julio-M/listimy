@@ -85,9 +85,9 @@ function App() {
   
   const displayLoged = (
         <>
-        <Route path="/" element={<LandingPage searchParams={searchParams} setSearchParams={setSearchParams}/>} />
+        <Route path="/" element={<LandingPage setSearchParams={setSearchParams}/>} />
         {currentUser&&currentUser.account_type==='user'?<Route path="/places" element={<Places searchParams={searchParams} freelancerData={freelancerData} services={services} setServices={setServices} setViewFreelancer={setViewFreelancer} viewFreelancer={viewFreelancer}/>}/>:null}
-        {currentUser&&!freelancerData.errors&&viewFreelancer&&currentUser.account_type==='user'?<Route path="/freelancer" element={<FreelancerViewOnly currentUser={viewFreelancer} />}/>:null}
+        {currentUser&&!freelancerData.errors&&viewFreelancer&&currentUser.account_type==='user'?<Route path="/freelancer" element={<FreelancerViewOnly viewFreelancer={viewFreelancer} currentUser={currentUser}/>}/>:null}
         <Route path="/myprofile" element={<UserProfile currentUser={currentUser}/>} />
         <Route path="/account" element={<EditAccount currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
         </>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import './freelancerviewonly.css'
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -32,11 +32,20 @@ const style = {
   textAlign:"center",
 };
 
-function FreelancerViewOnly ({currentUser}) {
+function FreelancerViewOnly ({viewFreelancer,currentUser}) {
 
-  const [myServices, setMyServices] = useState(currentUser.services)
+  const [myServices, setMyServices] = useState(viewFreelancer.services)
 
-  const [myBookings, setMyBookings] = useState(currentUser.bookings)
+  const [myBookings, setMyBookings] = useState([])
+
+
+ useEffect( () => {
+    fetch(`bookings/${viewFreelancer.id}`)
+    .then( res => res.json())
+    .then( data => setMyBookings(data))
+    .catch( error => console.log(error.message));
+ },[])
+
 
 
   const [which, setWhich] = useState('profile')
@@ -60,14 +69,14 @@ function FreelancerViewOnly ({currentUser}) {
   };
 
 
-  console.log(currentUser)
+  console.log(viewFreelancer)
 
   const displayFreelanceAddOns = (
       <>
         <Grid id='photo-grid' item xs={6}>
           <Item className='title-comp'>Photo Album</Item>
           <Item id='service-photos'>
-          <img className='service-pics' src={currentUser.services_photos} alt='color'/>
+          <img className='service-pics' src={viewFreelancer.services_photos} alt='color'/>
           </Item>
         </Grid>
         <Grid id='services-prices' item xs={6}>
@@ -77,14 +86,8 @@ function FreelancerViewOnly ({currentUser}) {
           </Item>
           <Item><Button onClick={handleOpenService}>Book an appointment</Button></Item>
         </Grid>
-        <Grid item xs={4}>
-          <Item>About</Item>
-        </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12}>
           <Item>Map</Item>
-        </Grid>
-        <Grid item xs={4}>
-          <Item>Contact Info</Item>
         </Grid>
        </>
   )
@@ -94,29 +97,29 @@ function FreelancerViewOnly ({currentUser}) {
       <Box className='profilepage'>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <img className='cover-photo' name='cover'onClick={handleOpen} src={currentUser.cover_photo} alt='cover'/>
+          <img className='cover-photo' name='cover'onClick={handleOpen} src={viewFreelancer.cover_photo} alt='cover'/>
         </Grid>
         <Grid item xs={4}>
         <div className='profile'>
-        <img className='profile-picture' name='profile' onClick={handleOpen} src={currentUser.profile_picture} alt='profile'/>
+        <img className='profile-picture' name='profile' onClick={handleOpen} src={viewFreelancer.profile_picture} alt='profile'/>
           <div className='presonalinfo'>
-            <h3 className='username'>{currentUser.username}</h3>
-            <p className='Location'>{currentUser.email}</p>
-            <p className='account-type'>Type: {currentUser.services?"Freelancer":"Client"}</p>
+            <h3 className='username'>{viewFreelancer.username}</h3>
+            <p className='Location'>{viewFreelancer.email}</p>
+            <p className='account-type'>Type: {viewFreelancer.services?"Freelancer":"Client"}</p>
           </div>
         </div>
         </Grid>
-        <Grid item xs={12}>
+        <Grid zeroMinWidth item xs={12}>
           <Item className='title-comp-free'>Bookings</Item>
           <Item className='services-cont-book'>
             <BookingTable myBookings={myBookings}/>
           </Item>
         </Grid>
-        {currentUser&&currentUser.account_type==='user'?null:displayFreelanceAddOns}
-        <Grid item xs={6}>
+        {viewFreelancer&&viewFreelancer.account_type==='user'?null:displayFreelanceAddOns}
+        <Grid zeroMinWidth item xs={6}>
           <Item>Reviews</Item>
         </Grid>
-        <Grid item xs={6}>
+        <Grid zeroMinWidth item xs={6}>
           <Item>Chat</Item>
         </Grid>
       </Grid>
@@ -131,7 +134,7 @@ function FreelancerViewOnly ({currentUser}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <img className='modal' src={which==='profile'?currentUser.profile_picture:currentUser.cover_photo} alt='profile'/>
+          <img className='modal' src={which==='profile'?viewFreelancer.profile_picture:viewFreelancer.cover_photo} alt='profile'/>
         </Box>
       </Modal>
     </div>
@@ -144,7 +147,7 @@ function FreelancerViewOnly ({currentUser}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <BookingForm currentUser={currentUser} setMyServices={setMyServices}/>
+          <BookingForm viewFreelancer={viewFreelancer} currentUser={currentUser} setMyBookings={setMyBookings} myBookings={myBookings}/>
         </Box>
       </Modal>
     </div>

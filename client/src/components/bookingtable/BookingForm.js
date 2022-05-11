@@ -4,22 +4,27 @@ import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import { Button } from "@mui/material";
 import FormControl from '@mui/material/FormControl';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-function BookingForm ({currentUser,setMyServices,myServices}) {
+function BookingForm ({viewFreelancer,setMyBookings,currentUser,myBookings}) {
     const [errors, setErrors] = useState([]);
+    const [bookingDate, setBookingDate] = useState(new Date('2022-01-18T21:11:54'));
 
-    console.log('Service',currentUser.services)
+    const handleDateChange = (newValue) => {
+      setBookingDate(newValue);
+    };
 
     const [formData, setFormData] = useState({
       service_id: 0,
       user_id:currentUser.id,
-      freelancer_id:currentUser.id,
-      booking_date:'05/17/2022'
+      freelancer_id:viewFreelancer.id,
     })
 
     ///service-create
-    const postService = () => {
-      fetch(`/service-create`, {
+    const postBooking = () => {
+      fetch(`/bookings`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -29,7 +34,7 @@ function BookingForm ({currentUser,setMyServices,myServices}) {
     })
     .then( res => {
       if (res.ok) {
-        res.json().then((ser) => setMyServices([...myServices,ser]))
+        res.json().then((ser) => setMyBookings([...myBookings,ser]))
       } else{
         res.json().then((err)=> setErrors(err.errors))
     }
@@ -40,15 +45,16 @@ function BookingForm ({currentUser,setMyServices,myServices}) {
       const name =e.target.name
       let value = e.target.value
 
-      setFormData({...formData, [name]:value})
+      setFormData({...formData, [name]:value,
+        booking_date:bookingDate})
     }
 
-    const displayServices = currentUser.services.map(serv =><MenuItem key={serv.id} value={serv.id}>{serv.service_name}</MenuItem> )
+    const displayServices = viewFreelancer.services.map(serv =><MenuItem key={serv.id} value={serv.id}>{serv.service_name}</MenuItem> )
 
     const handleSubmit = (e) => {
       e.preventDefault()
       console.log('clicked')
-      postService()
+      postBooking()
     }
 
     return (
@@ -62,18 +68,25 @@ function BookingForm ({currentUser,setMyServices,myServices}) {
       autoComplete="off"
     >
             <TextField
-          name='category_id'
+          name='service_id'
           id="filled-select-currency"
           select
           label="Select"
           value={formData.ser}
           onChange={handleChange}
-          helperText="Please select your category"
+          helperText="Please select a service"
           variant="filled"
         >
             {displayServices}
         </TextField>
-            <TextField onChange={handleChange} id="outlined-basic" name='service_price' label="Choose a date" variant="outlined" type='number' value={formData.service_price} /> 
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DateTimePicker
+            name='booking_date'
+            value={bookingDate}
+            onChange={handleDateChange}
+            renderInput={(params) => <TextField {...params} />}
+          />
+         </LocalizationProvider>
         <Button type='submit'>Request Booking</Button>
         <div>{errors.map((err) => (
                 <p>{err}</p>

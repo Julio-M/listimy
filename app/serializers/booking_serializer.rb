@@ -3,4 +3,5 @@ class BookingSerializer < ActiveModel::Serializer
 
   belongs_to :user
   belongs_to :freelancer
+  belongs_to :service
 end
