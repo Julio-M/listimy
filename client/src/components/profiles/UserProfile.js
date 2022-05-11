@@ -108,6 +108,7 @@ function UserProfile ({currentUser}) {
             <h3 className='username'>{currentUser.username}</h3>
             <p className='Location'>{currentUser.email}</p>
             <p className='account-type'>Type: {currentUser.services?"Freelancer":"Client"}</p>
+            <p>{currentUser.account_type==='freelancer'?currentUser.location:null}</p>
           </div>
         </div>
         </Grid>

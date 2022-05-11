@@ -87,7 +87,6 @@ function EditAccount ({currentUser,setCurrentUser}) {
 
     const handleSubmit = (e) => {
       e.preventDefault()
-      console.log(myImage)
       console.log('Sent data')
       patchData()
     }
