@@ -3,7 +3,7 @@ import TopLayout from "./TopLayout";
 import Categories from "./Categories";
 import './landingpage.css'
 
-function LandingPage ({selectCategory, setSearchParams, searchParams}) {
+function LandingPage ({selectCategory, setSearchParams }) {
   
   const [categories,setCategories] = useState([])
 
