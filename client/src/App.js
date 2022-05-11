@@ -1,7 +1,7 @@
 import './App.css';
 import { useState, useEffect } from "react";
 import NavBar from './components/navbar/NavBar';
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, useSearchParams } from "react-router-dom";
 import LandingPage from './components/landingpage/LandingPage';
 import Login from './components/login/Login';
 import SignupUser from './components/signup/SignupUser';
@@ -18,6 +18,8 @@ function App() {
   const [currentUser,setCurrentUser] = useState(null)
   const [freelancerData, setFreelancerData] = useState([])
   const [services, setServices] = useState([])
+  
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const [viewFreelancer, setViewFreelancer] = useState(null)
 
@@ -79,13 +81,12 @@ function App() {
     }
   })
   },[])
-
-
-
+  
+  
   const displayLoged = (
         <>
-        <Route path="/" element={<LandingPage/>} />
-        {currentUser&&currentUser.account_type==='user'?<Route path="/places" element={<Places freelancerData={freelancerData} services={services} setServices={setServices} setViewFreelancer={setViewFreelancer} viewFreelancer={viewFreelancer}/>}/>:null}
+        <Route path="/" element={<LandingPage searchParams={searchParams} setSearchParams={setSearchParams}/>} />
+        {currentUser&&currentUser.account_type==='user'?<Route path="/places" element={<Places searchParams={searchParams} freelancerData={freelancerData} services={services} setServices={setServices} setViewFreelancer={setViewFreelancer} viewFreelancer={viewFreelancer}/>}/>:null}
         {currentUser&&!freelancerData.errors&&viewFreelancer&&currentUser.account_type==='user'?<Route path="/freelancer" element={<FreelancerViewOnly currentUser={viewFreelancer} />}/>:null}
         <Route path="/myprofile" element={<UserProfile currentUser={currentUser}/>} />
         <Route path="/account" element={<EditAccount currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />

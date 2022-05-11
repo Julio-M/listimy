@@ -1,4 +1,4 @@
-import {  GoogleMap, Marker } from "@react-google-maps/api"
+import {  GoogleMap, InfoWindow, Marker } from "@react-google-maps/api"
 import './maps.css'
 import {useState, useMemo, useCallback, useRef, useEffect} from "react"
 import usePlacesAutocomplete, {getGeocode, getLatLng} from "use-places-autocomplete"
@@ -11,9 +11,10 @@ import Geocode from "react-geocode";
 
 const Maps = ({selected, freelancerData, services, setServices, center, setCenter}) => {
     
-    Geocode.setApiKey('AIzaSyDoIZLoWdlpEK-wreROwlqh01Yg3bfPkpM')
+    Geocode.setApiKey('')
     
     const mapRef = useRef()
+    const [activeMarker, setActiveMarker] = useState(null)
 
     const onLoad = useCallback(map => mapRef.current = map, [])
     
@@ -23,9 +24,7 @@ const Maps = ({selected, freelancerData, services, setServices, center, setCente
             Geocode.fromAddress(freelancer.location).then(
                 res => {
                     const {lat, lng} = res.results[0].geometry.location
-                    console.log({lat, lng})
                     listServices.push({lat, lng})
-                    console.log(listServices)
                 }
             )
         })
@@ -40,10 +39,27 @@ const Maps = ({selected, freelancerData, services, setServices, center, setCente
         mapContainerClassName='map_container'
         onLoad={onLoad}
         >
+           
           {selected && (
           <>
-          {services.map(service => <Marker position={service}/>)}
+          {services.map(service => {
+            return (
+               
+                <Marker position={service} onClick={()=>setActiveMarker({service})} >
+                   {activeMarker 
+                        ? 
+                        <InfoWindow position={center} visible={true} onCloseClick={()=>setActiveMarker(null)}>
+                            <div>Service: Info</div>
+                        </InfoWindow>
+                        :
+                        null
+                    }
+                </Marker>
+               
+            )
+          })}
           <Marker position={selected} />
+           
           </> 
           )}
           <Marker position={center} />

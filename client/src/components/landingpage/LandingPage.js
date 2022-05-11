@@ -3,8 +3,8 @@ import TopLayout from "./TopLayout";
 import Categories from "./Categories";
 import './landingpage.css'
 
-function LandingPage (props) {
-
+function LandingPage ({selectCategory, setSearchParams, searchParams}) {
+  
   const [categories,setCategories] = useState([])
 
   const getData = () => {
@@ -25,7 +25,7 @@ function LandingPage (props) {
             <TopLayout/>
         </div>
         <div className="categories">
-            <Categories categories={categories}/>
+            <Categories setSearchParams={setSearchParams} categories={categories}/>
         </div>
       </div>
     );

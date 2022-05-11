@@ -3,4 +3,5 @@ class FreelancerSerializer < ActiveModel::Serializer
   has_many :services
   has_many :reviews
   has_many :bookings
+  has_many :categories
 end

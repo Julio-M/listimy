@@ -3,9 +3,9 @@ import Grid from '@mui/material/Grid';
 import Cards from "./Cards"
 
 
-function Categories ({categories}) {
+function Categories ({categories, setSearchParams}) {
 
-  const displayCards = categories.map(cat => <Grid item xs={12} sm={12} md={4}><Cards categories={cat}/></Grid>)
+  const displayCards = categories.map(cat => <Grid item xs={12} sm={12} md={4}><Cards categories={cat} setSearchParams={setSearchParams}/></Grid>)
   return (
     <>
     <h3 className='title'>Services</h3>

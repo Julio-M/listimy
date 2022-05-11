@@ -17,7 +17,7 @@ import List from '@mui/material/List';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Tooltip from '@mui/material/Tooltip';
 
-const Services = ({setCenter, freelancer,setViewFreelancer}) => {
+const Services = ({setSelected, setCenter, freelancer,setViewFreelancer}) => {
     let navigate = useNavigate();
     const [errors, setErrors] = useState([]);
     const [expanded, setExpanded] = useState(false)
@@ -50,6 +50,7 @@ const Services = ({setCenter, freelancer,setViewFreelancer}) => {
             const {lat, lng} = res.results[0].geometry.location
             console.log({lat, lng})
             setCenter({lat, lng})
+            
         }
         )
     }
