@@ -19,7 +19,7 @@ const Places = ({searchParams, freelancerData, services, setServices, setViewFre
     const query = searchParams.get('category_name')
     
     const {isLoaded} = useLoadScript({
-        googleMapsApiKey: "",
+        googleMapsApiKey: "AIzaSyDoIZLoWdlpEK-wreROwlqh01Yg3bfPkpM",
         libraries: ["places"]
     })
 

@@ -8,7 +8,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-function BookingForm ({viewFreelancer,setMyBookings,currentUser,myBookings}) {
+function BookingForm ({viewFreelancer,setMyBookings,currentUser,myBookings,setOpenService}) {
     const [errors, setErrors] = useState([]);
     const [bookingDate, setBookingDate] = useState(new Date('2022-01-18T21:11:54'));
 
@@ -34,7 +34,7 @@ function BookingForm ({viewFreelancer,setMyBookings,currentUser,myBookings}) {
     })
     .then( res => {
       if (res.ok) {
-        res.json().then((ser) => setMyBookings([...myBookings,ser]))
+        res.json().then((ser) => setMyBookings([...myBookings,ser])).then(setOpenService(false))
       } else{
         res.json().then((err)=> setErrors(err.errors))
     }

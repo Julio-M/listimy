@@ -82,7 +82,7 @@ function FreelancerViewOnly ({viewFreelancer,currentUser}) {
         <Grid id='services-prices' item xs={6}>
           <Item className='title-comp'>Services & Prices</Item>
           <Item className='services-cont'>
-            <ServiceTable myServices={myServices}/>
+            <ServiceTable myServices={myServices} currentUser={currentUser}/>
           </Item>
           <Item><Button onClick={handleOpenService}>Book an appointment</Button></Item>
         </Grid>
@@ -112,7 +112,7 @@ function FreelancerViewOnly ({viewFreelancer,currentUser}) {
         <Grid zeroMinWidth item xs={12}>
           <Item className='title-comp-free'>Bookings</Item>
           <Item className='services-cont-book'>
-            <BookingTable myBookings={myBookings}/>
+            <BookingTable myBookings={myBookings} currentUser={currentUser} setMyBookings={setMyBookings}/>
           </Item>
         </Grid>
         {viewFreelancer&&viewFreelancer.account_type==='user'?null:displayFreelanceAddOns}
@@ -147,7 +147,7 @@ function FreelancerViewOnly ({viewFreelancer,currentUser}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <BookingForm viewFreelancer={viewFreelancer} currentUser={currentUser} setMyBookings={setMyBookings} myBookings={myBookings}/>
+          <BookingForm viewFreelancer={viewFreelancer} currentUser={currentUser} setMyBookings={setMyBookings} myBookings={myBookings} setOpenService={setOpenService}/>
         </Box>
       </Modal>
     </div>

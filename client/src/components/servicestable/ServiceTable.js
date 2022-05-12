@@ -6,9 +6,22 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Button } from "@mui/material";
 
-function ServiceTable ({myServices}) {
+function ServiceTable ({myServices,setMyServices,currentUser}) {
 
+   const deleteData = (sid) => {
+      fetch(`services/${sid}`, {
+          method: "DELETE"
+      })
+      .then(setMyServices(myServices.filter(ser=>sid!==ser.id)))
+      .catch( error => console.log(error.message));
+    }
+
+    const handleClick =(e) =>{
+      const value = parseInt(e.target.value)
+      deleteData(value)
+    }
 
     return (
       <TableContainer component={Paper}>
@@ -23,6 +36,7 @@ function ServiceTable ({myServices}) {
                   {row.service_name}
                 </TableCell>
                 <TableCell align="right">${row.service_price}</TableCell>
+                <TableCell align="right">{currentUser.account_type==='freelancer'?<Button onClick={handleClick} value={row.id} style={{color:'red'}}>Remove</Button>:null}</TableCell>
               </TableRow>
             ))}
           </TableBody>

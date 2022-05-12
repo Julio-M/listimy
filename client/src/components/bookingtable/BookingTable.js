@@ -6,8 +6,22 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Button } from "@mui/material";
 
-function BookingTable ({myBookings}) {
+function BookingTable ({myBookings,setMyBookings,currentUser}) {
+
+  const deleteData = (sid) => {
+    fetch(`bookings/${sid}`, {
+        method: "DELETE"
+    })
+    .then(setMyBookings(myBookings.filter(bk=>sid!==bk.id)))
+    .catch( error => console.log(error.message));
+  }
+
+  const handleClick =(e) =>{
+    const value = parseInt(e.target.value)
+    deleteData(value)
+  }
 
   console.log('bookings',myBookings)
 
@@ -21,6 +35,8 @@ function BookingTable ({myBookings}) {
       </TableCell>
       <TableCell align="right">{row.freelancer.username}</TableCell>
       <TableCell align="right">{row.booking_date}</TableCell>
+      <TableCell align="right">{currentUser.username==='freelancer'?<Button onClick={handleClick} value={row.id} style={{color:'red'}}>Remove</Button>:null}</TableCell>
+
     </TableRow>
   ))
 

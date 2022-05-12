@@ -32,10 +32,16 @@ Rails.application.routes.draw do
   #services start
 
   post '/service-create', to: 'services#create'
+  delete '/services/:id', to: 'services#destroy'
 
   #services end
 
+  #bookings start#
   get '/bookings/users/:id', to: 'bookings#show_user_booking'
+  get '/bookings/freelancers/:id', to: 'bookings#show_freelancer_booking'
+
+  delete '/bookings/:id', to: 'bookings#destroy'
+  #bookings end#
 
 
   # Leave this here to help deploy your app later!

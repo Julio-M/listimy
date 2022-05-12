@@ -36,11 +36,19 @@ function UserProfile ({currentUser}) {
 
   const [myBookings, setMyBookings] = useState([])
 
+  const getBookings = (type) => {
+    fetch(`bookings/${type}/${currentUser.id}`)
+    .then( res => res.json())
+    .then( data => setMyBookings(data))
+    .catch( error => console.log(error.message));
+  }
+
   useEffect( () => {
-   fetch(`bookings/users/${currentUser.id}`)
-   .then( res => res.json())
-   .then( data => setMyBookings(data))
-   .catch( error => console.log(error.message));
+   if(currentUser.account_type==='user'){
+     getBookings("users")
+   }else{
+     getBookings("freelancers")
+   }
   },[])
 
   const [myServices, setMyServices] = useState(currentUser.services)
@@ -85,7 +93,7 @@ function UserProfile ({currentUser}) {
         <Grid zeroMinWidth id='services-prices' item xs={6}>
           <Item className='title-comp-free'>Services & Prices <Button onClick={handleOpenService}>+ Add Service</Button></Item>
           <Item className='services-cont-free'>
-            <ServiceTable myServices={myServices}/>
+            <ServiceTable myServices={myServices} setMyServices={setMyServices} setMyBookings={setMyBookings} currentUser={currentUser}/>
           </Item>
         </Grid>
         <Grid zeroMinWidth item xs={12}>
@@ -113,9 +121,9 @@ function UserProfile ({currentUser}) {
         </div>
         </Grid>
         <Grid zeroMinWidth item xs={12}>
-          <Item className='title-comp-free'>Bookings {currentUser.account_type==='freelancer'?<Button onClick={handleOpenBooking}>| Edit Bookings |</Button>:null}</Item>
+          <Item className='title-comp-free'>Bookings</Item>
           <Item className='services-cont-book'>
-            <BookingTable myBookings={myBookings}/>
+            <BookingTable myBookings={myBookings} currentUser={currentUser} setMyBookings={setMyBookings}/>
           </Item>
         </Grid>
         {currentUser&&currentUser.account_type==='user'?null:displayFreelanceAddOns}
@@ -150,7 +158,7 @@ function UserProfile ({currentUser}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <ServiceForm currentUser={currentUser} setMyServices={setMyServices} myServices={myServices}/>
+          <ServiceForm currentUser={currentUser} setMyServices={setMyServices} myServices={myServices} setOpenService={setOpenService}/>
         </Box>
       </Modal>
     </div>

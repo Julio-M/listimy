@@ -5,6 +5,8 @@ import axios from 'axios'
 
 function EditAccount ({currentUser,setCurrentUser}) {  
 
+    const [submitted, setSubmitted] = useState(false)
+
     const [editUser, setEditUser] = useState({})
     
     const [isUpProfile, setIsUpProfile] =useState(false)
@@ -62,7 +64,7 @@ function EditAccount ({currentUser,setCurrentUser}) {
         if(currentUser.id===data.id) return data
         return currentUser
       }
-      ))
+      )).then(setSubmitted(true))
       .catch( error => console.log(error.message));
     }
 
@@ -127,6 +129,7 @@ function EditAccount ({currentUser,setCurrentUser}) {
             </div>
             {account_type==='user'?null:displayFree}
             <Button type='submit' id='submitEdit'>Submit</Button>
+            {submitted?<p className='upload'>Done</p>:null}
             <div className='sbutton'>
             <Button onClick={handleDelete} id='go-to-sign-up'>Delete User</Button>
           </div>

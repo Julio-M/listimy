@@ -116,7 +116,7 @@ function SignupUser ({onLogin, accountType,setAccountType}) {
               name="radio-buttons-group"
           >
           <FormControlLabel onChange={changeType} value="user" control={<Radio style={{color:'white'}} />} label="Signup as a User" />
-          <FormControlLabel onChange={changeType} value="freelancer" control={<Radio style={{color:'white'}}/>} label="Signup as a freelancer" />
+          <FormControlLabel onChange={changeType} value="freelancer" control={<Radio style={{color:'white'}}/>} label="Signup as a Freelancer" />
           </RadioGroup>
           </div>
           <Button type='submit' id='submitLogin'>{isLoading ? "Loading..." : "Sign Up"}</Button>
