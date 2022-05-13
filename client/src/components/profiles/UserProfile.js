@@ -130,9 +130,9 @@ function UserProfile ({currentUser}) {
           </Item>
         </Grid>
         {currentUser&&currentUser.account_type==='user'?null:displayFreelanceAddOns}
-        <Grid zeroMinWidth item xs={12}>
+        {/* <Grid zeroMinWidth item xs={12}>
           <Item>Chat</Item>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Box>
     

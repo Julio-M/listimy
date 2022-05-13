@@ -9,7 +9,7 @@ import Geocode from "react-geocode";
 
 const Maps = ({selected, freelancerData, services, setServices, center, setCenter}) => {
     
-    Geocode.setApiKey('AIzaSyDoIZLoWdlpEK-wreROwlqh01Yg3bfPkpM')
+    Geocode.setApiKey('')
     
     const mapRef = useRef()
     const [activeMarker, setActiveMarker] = useState(null)

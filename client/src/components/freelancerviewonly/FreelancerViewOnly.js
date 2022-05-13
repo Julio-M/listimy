@@ -126,9 +126,9 @@ function FreelancerViewOnly ({viewFreelancer,currentUser}) {
           <Item>Reviews</Item>
           <Item className='reviews-cont'><Reviews currentUser={currentUser} viewFreelancer={viewFreelancer}/></Item>
         </Grid>
-        <Grid zeroMinWidth item xs={12}>
+        {/* <Grid zeroMinWidth item xs={12}>
           <Item>Chat</Item>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Box>
     
