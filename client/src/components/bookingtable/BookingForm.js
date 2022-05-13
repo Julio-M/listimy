@@ -8,7 +8,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-function BookingForm ({viewFreelancer,setMyBookings,currentUser,myBookings}) {
+function BookingForm ({viewFreelancer,setMyBookings,currentUser,myBookings,setOpenService}) {
     const [errors, setErrors] = useState([]);
     const [bookingDate, setBookingDate] = useState(new Date('2022-01-18T21:11:54'));
 
@@ -34,19 +34,20 @@ function BookingForm ({viewFreelancer,setMyBookings,currentUser,myBookings}) {
     })
     .then( res => {
       if (res.ok) {
-        res.json().then((ser) => setMyBookings([...myBookings,ser]))
+        res.json().then((ser) => setMyBookings([...myBookings,ser])).then(setOpenService(false))
       } else{
         res.json().then((err)=> setErrors(err.errors))
     }
     })
     }
 
+     // console.log('Hello',`${(bookingDate.getMonth()+1)}/${bookingDate.getDate()}/${bookingDate.getFullYear()} @ ${bookingDate.getHours()}:${bookingDate.getMinutes()}`)
     const handleChange = (e) => {
       const name =e.target.name
       let value = e.target.value
 
       setFormData({...formData, [name]:value,
-        booking_date:bookingDate})
+        booking_date:`${(bookingDate.getMonth()+1)}/${bookingDate.getDate()}/${bookingDate.getFullYear()} @ ${bookingDate.getHours()}:${bookingDate.getMinutes()}`})
     }
 
     const displayServices = viewFreelancer.services.map(serv =><MenuItem key={serv.id} value={serv.id}>{serv.service_name}</MenuItem> )

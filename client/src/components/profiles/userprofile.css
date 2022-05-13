@@ -81,11 +81,15 @@
 }
 
 .services-cont-free{
-  height:30vh;
+  height:38vh;
 }
 
 .title-comps-free{
   text-align: center;
+}
+
+#bookingtitle{
+  cursor: pointer;
 }
 
 .css-mhc70k-MuiGrid-root>.MuiGrid-item#photo-grid{
@@ -93,7 +97,7 @@
 } 
 
 #services-prices{
-  margin-top: -10rem;
+  /* margin-top: -10rem; */
   height: 36vh;
 }
 
@@ -101,15 +105,18 @@
   overflow: hidden;
   overflow-y: scroll;
   position: relative;
-  height: 100%;
 }
 
 .services-cont-book{
   position: relative;
-  margin-bottom: 10rem;
+  /* margin-bottom: 10rem; */
   overflow: hidden;
   overflow-y: scroll;
   position: relative;
   height:30vh;
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.services-cont-book.css-1633um2-MuiPaper-root{
+  margin-bottom: 0rem;
 }
 

@@ -18,19 +18,24 @@ const Places = ({setFreelancerData, searchParams, freelancerData, services, setS
     const [searchName, setSearchName] = useState("")
     const query = searchParams.get('category_name')
     const [listService, setListService] = useState(null)
+    const query2 = searchParams.get('service_name')
     
     const {isLoaded} = useLoadScript({
         googleMapsApiKey: "",
         libraries: ["places"]
     })
 
+    console.log(freelancerData)
+
     
 
     const filtered = freelancerData.filter(freelancer => {
         if (query) {
-             return freelancer.categories.find(category => category.category_name === query)
-        } else if (searchName){
-             return freelancer.username.toLowerCase().includes(searchName.toLowerCase())
+            return freelancer.categories.find(category => category.category_name === query)
+        } else if(query2) {
+            return freelancer.services.find(service => service.service_name===query2)
+        }else if (searchName){
+            return freelancer.username.toLowerCase().includes(searchName.toLowerCase())
         } else {
             return freelancer
         }

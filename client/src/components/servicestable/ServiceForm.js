@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Button } from "@mui/material";
 import FormControl from '@mui/material/FormControl';
 
-function ServiceForm ({currentUser,setMyServices,myServices}) {
+function ServiceForm ({currentUser,setMyServices,myServices,setOpenService}) {
     const [errors, setErrors] = useState([]);
 
     const [categories,setCategories] = useState([])
@@ -21,7 +21,7 @@ function ServiceForm ({currentUser,setMyServices,myServices}) {
     getData()
     },[])
 
-
+   
     const [formData, setFormData] = useState({
       service_name: "",
       service_price: 0,
@@ -41,7 +41,7 @@ function ServiceForm ({currentUser,setMyServices,myServices}) {
     })
     .then( res => {
       if (res.ok) {
-        res.json().then((ser) => setMyServices([...myServices,ser]))
+        res.json().then((ser) => setMyServices([...myServices,ser])).then(setOpenService(false))
       } else{
         res.json().then((err)=> setErrors(err.errors))
     }

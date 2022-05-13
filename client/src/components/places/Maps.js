@@ -1,8 +1,6 @@
 import {  GoogleMap, InfoWindow, Marker } from "@react-google-maps/api"
 import './maps.css'
 import {useState, useMemo, useCallback, useRef, useEffect} from "react"
-import usePlacesAutocomplete, {getGeocode, getLatLng} from "use-places-autocomplete"
-import {Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption} from "@reach/combobox"
 import "@reach/combobox/styles.css"
 import Geocode from "react-geocode";
 import Rating from '@mui/material/Rating';

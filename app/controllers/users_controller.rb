@@ -1,12 +1,22 @@
 class UsersController < ApplicationController
-    before_action :find_user, only: %i[show update]
-    before_action :find_freelancer, only: %i[show update]
-    skip_before_action :authorize, only: %i[show create update]
-    skip_before_action :authorize_freelancer, only: %i[show create index update]
+    before_action :find_user, only: %i[show update destroy]
+    before_action :find_freelancer, only: %i[show update destroy]
+    skip_before_action :authorize, only: %i[show create update destroy]
+    skip_before_action :authorize_freelancer, only: %i[show create index update destroy]
     
     def index
         users = User.all
         render json: users
+    end
+
+    def destroy
+        if @user
+            @user.destroy
+            head :no_content
+        else
+            @freelancer.destroy
+            head :no_content
+        end
     end
 
     def show
@@ -25,15 +35,17 @@ class UsersController < ApplicationController
 
     def update
         if @user
-            
             image = params[:image]
             @user.image.attach(image) if image.present?
             @user.update!(user_params)
             @user.update!(profile_picture: @user.image_url)
             render json: @user.as_json(root: false, methods: :image_url), status: :accepted
         else
-            @freelancer.update(free_params)
-            render json: @freelancer, status: :accepted
+            image = params[:image]
+            @freelancer.image.attach(image) if image.present?
+            @freelancer.update!(free_params)
+            @freelancer.update!(profile_picture: @freelancer.image_url)
+            render json: @freelancer.as_json(root: false, methods: :image_url), status: :accepted
         end
     end
 

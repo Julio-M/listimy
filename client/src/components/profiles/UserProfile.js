@@ -36,11 +36,19 @@ function UserProfile ({currentUser}) {
 
   const [myBookings, setMyBookings] = useState([])
 
+  const getBookings = (type) => {
+    fetch(`bookings/${type}/${currentUser.id}`)
+    .then( res => res.json())
+    .then( data => setMyBookings(data))
+    .catch( error => console.log(error.message));
+  }
+
   useEffect( () => {
-   fetch(`bookings/users/${currentUser.id}`)
-   .then( res => res.json())
-   .then( data => setMyBookings(data))
-   .catch( error => console.log(error.message));
+   if(currentUser.account_type==='user'){
+     getBookings("users")
+   }else{
+     getBookings("freelancers")
+   }
   },[])
 
   const [myServices, setMyServices] = useState(currentUser.services)
@@ -72,6 +80,8 @@ function UserProfile ({currentUser}) {
     setOpenBooking(false)
   };
 
+  const displayAverageRating = currentUser.reviews.map(rew => rew.stars).reduce((a, b) => (a + b)/currentUser.reviews.length, 0)
+
 
 
   const displayFreelanceAddOns = (
@@ -85,12 +95,12 @@ function UserProfile ({currentUser}) {
         <Grid zeroMinWidth id='services-prices' item xs={6}>
           <Item className='title-comp-free'>Services & Prices <Button onClick={handleOpenService}>+ Add Service</Button></Item>
           <Item className='services-cont-free'>
-            <ServiceTable myServices={myServices}/>
+            <ServiceTable myServices={myServices} setMyServices={setMyServices} setMyBookings={setMyBookings} currentUser={currentUser}/>
           </Item>
         </Grid>
-        <Grid zeroMinWidth item xs={12}>
+        {/* <Grid zeroMinWidth item xs={12}>
           <Item>Map</Item>
-        </Grid>
+        </Grid> */}
        </>
   )
   
@@ -108,22 +118,21 @@ function UserProfile ({currentUser}) {
             <h3 className='username'>{currentUser.username}</h3>
             <p className='Location'>{currentUser.email}</p>
             <p className='account-type'>Type: {currentUser.services?"Freelancer":"Client"}</p>
+            <p>{currentUser.account_type==='freelancer'?currentUser.location:null}</p>
+            {currentUser.account_type==='freelancer'?<p className='account-type'>{displayAverageRating}/5</p>:null}
           </div>
         </div>
         </Grid>
         <Grid zeroMinWidth item xs={12}>
-          <Item className='title-comp-free'>Bookings {currentUser.account_type==='freelancer'?<Button onClick={handleOpenBooking}>| Edit Bookings |</Button>:null}</Item>
+          <Item className='title-comp-free' id='bookingtitle' onClick={handleOpenBooking}>Bookings</Item>
           <Item className='services-cont-book'>
-            <BookingTable myBookings={myBookings}/>
+            <BookingTable myBookings={myBookings} setMyBookings={setMyBookings}/>
           </Item>
         </Grid>
         {currentUser&&currentUser.account_type==='user'?null:displayFreelanceAddOns}
-        <Grid zeroMinWidth item xs={6}>
-          <Item>Reviews</Item>
-        </Grid>
-        <Grid zeroMinWidth item xs={6}>
+        {/* <Grid zeroMinWidth item xs={12}>
           <Item>Chat</Item>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Box>
     
@@ -149,7 +158,7 @@ function UserProfile ({currentUser}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <ServiceForm currentUser={currentUser} setMyServices={setMyServices} myServices={myServices}/>
+          <ServiceForm currentUser={currentUser} setMyServices={setMyServices} myServices={myServices} setOpenService={setOpenService}/>
         </Box>
       </Modal>
     </div>

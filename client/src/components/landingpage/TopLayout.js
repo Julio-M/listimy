@@ -1,20 +1,48 @@
-import React, {useState } from "react";
+import React, {useState,useEffect } from "react";
 import TextField from '@mui/material/TextField';
 import './landingpage.css'
 import Grid from '@mui/material/Grid';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import Button from '@mui/material/Button';
+import Autocomplete from '@mui/material/Autocomplete';
+import { Button } from "@mui/material";
+import { useNavigate} from "react-router-dom";
+import SearchIcon from '@mui/icons-material/Search';
 
 
-function TopLayout (props) {
+function TopLayout ({setSearchParams}) {
+    let navigate = useNavigate()
+    const [services,setServices] = useState([])
+    const [myService,setMyService] = useState(services[0])
+    const [inputValue, setInputValue] = useState('');
 
-  const [value, setValue] = React.useState(new Date('2022-01-18T21:11:54'));
+    const getData = () => {
+      fetch ('/services')
+    .then (res => {
+      if (res.ok) {
+      res.json().then((data) => {
+        const names = data.map(serv => serv.service_name)
+        setServices(names)
+      })
+    } else {
+      console.log(res.json())
+    }
+  })
+  }
 
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
+
+  useEffect( () => {
+    getData()
+  },[])
+
+  const handleClick = (e) => {
+    setSearchParams({service_name:myService})
+    if (myService){
+      navigate({
+        pathname: `/places?service_name=${myService}`
+      })
+    }
+  }
+
+
 
     return (
       <>
@@ -27,19 +55,23 @@ function TopLayout (props) {
       style={{ minHeight: '50vh' }}
     >
         <Grid item xs={4}>
-            <TextField style={{width:'100%'}}id="service" label="Service" />  
+        <Autocomplete
+            value={myService}
+            onChange={(event, newValue) => {
+              setMyService(newValue);
+            }}
+            inputValue={inputValue}
+            disablePortal
+            id="combo-box-demo"
+            options={services}
+            onInputChange={(event, newInputValue) => {
+              setInputValue(newInputValue);
+            }}
+            renderInput={(params) => <TextField {...params} style={{width:'100%'}} id="service" label="Service" /> } 
+            />
         </Grid>
-        <Grid item xs={1}>
-          <TextField label="Zip code" id="zip" />
-        </Grid>
-        <Grid item xs={2}>
-         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DateTimePicker
-            value={value}
-            onChange={handleChange}
-            renderInput={(params) => <TextField {...params} />}
-          />
-         </LocalizationProvider>
+        <Grid item xs={0}>
+          <Button onClick={handleClick}><SearchIcon className='searchIcon'/></Button>
         </Grid>
       </Grid>
       </>

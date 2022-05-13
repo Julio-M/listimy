@@ -32,10 +32,23 @@ Rails.application.routes.draw do
   #services start
 
   post '/service-create', to: 'services#create'
+  delete '/services/:id', to: 'services#destroy'
 
   #services end
 
+  #bookings start#
   get '/bookings/users/:id', to: 'bookings#show_user_booking'
+  get '/bookings/freelancers/:id', to: 'bookings#show_freelancer_booking'
+
+  delete '/bookings/:id', to: 'bookings#destroy'
+  #bookings end#
+
+  #reviews start
+  post '/reviews-create', to: 'reviews#create'
+  get '/reviews/freelancers/:id', to: 'reviews#show_rew_free'
+
+  delete '/reviews/:id', to: 'reviews#destroy'
+  #reviews end
 
   #post to aws s3 bucket
 

@@ -3,6 +3,7 @@ import './editaccount.css'
 import { Button } from "@mui/material";
 import axios from 'axios'
 import CryptoJS from 'crypto-js'
+import { useNavigate } from "react-router-dom";
 
 const md5FromFile = (file) => {
   return new Promise((resolve, reject) => {
@@ -26,7 +27,22 @@ export const fileCheckSum = async(file) => {
   return checksum
 }
 
-function EditAccount ({currentUser,setCurrentUser}) {  
+
+function EditAccount ({currentUser,setCurrentUser}) {
+    let navigate = useNavigate();  
+
+    const deleteUser = (sid) => {
+      fetch(`users/${sid}`, {
+          method: "DELETE"
+      }).then(setCurrentUser(null)).then(navigate('/login'))
+      .catch( error => console.log(error.message));
+    }
+
+    const handleDelete = () => {
+      deleteUser(currentUser.id)
+    }
+
+    const [submitted, setSubmitted] = useState(false)
 
     const [editUser, setEditUser] = useState({})
     
@@ -143,7 +159,7 @@ function EditAccount ({currentUser,setCurrentUser}) {
         if(currentUser.id===data.id) return data
         return currentUser
       }
-      ))
+      )).then(setSubmitted(true))
       .catch( error => console.log(error.message));
     }
 
@@ -168,16 +184,9 @@ function EditAccount ({currentUser,setCurrentUser}) {
 
     const handleSubmit = (e) => {
       e.preventDefault()
-      console.log(myImage)
       console.log('Sent data')
       patchData()
     }
-
-    const handleDelete = (e) => {
-      console.log(e.target)
-    }
-
-    
 
     const displayFree = (
       <>
@@ -187,6 +196,7 @@ function EditAccount ({currentUser,setCurrentUser}) {
       </div>
       </>
     )
+
 
     return (
         <>
@@ -211,7 +221,7 @@ function EditAccount ({currentUser,setCurrentUser}) {
             </div>
             {account_type==='user'?null:displayFree}
             <Button type='submit' id='submitEdit'>Submit</Button>
-            
+            {submitted?<p className='upload'>Done</p>:null}
             <div className='sbutton'>
             <Button onClick={handleDelete} id='go-to-sign-up'>Delete User</Button>
           </div>

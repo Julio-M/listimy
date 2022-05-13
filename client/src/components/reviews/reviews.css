@@ -1,0 +1,19 @@
+.css-1u3bzj6-MuiFormControl-root-MuiTextField-root{
+  width: 100%;
+  height:100%
+}
+
+.reviews-table{
+  margin-left: 50%;
+}
+
+.MuiTableContainer-root.reviews-block.css-rorn0c-MuiTableContainer-root{
+  margin-top:-10rem;
+}
+
+.myform{
+  top: 0;
+  margin-right: 50%;
+  width: 70%;
+  position: sticky;
+}

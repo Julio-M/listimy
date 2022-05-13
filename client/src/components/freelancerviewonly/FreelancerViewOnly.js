@@ -9,6 +9,8 @@ import Modal from '@mui/material/Modal';
 import ServiceTable from "../servicestable/ServiceTable";
 import BookingForm from "../bookingtable/BookingForm";
 import BookingTable from "../bookingtable/BookingTable";
+import Reviews from "../reviews/Reviews";
+import ReviewsTable from "../reviews/ReviewsTable";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -71,9 +73,12 @@ function FreelancerViewOnly ({viewFreelancer,currentUser}) {
 
   console.log(viewFreelancer)
 
+  const displayAverageRating = viewFreelancer.reviews.map(rew => rew.stars).reduce((a, b) => a + b, 0)/viewFreelancer.reviews.length
+
+
   const displayFreelanceAddOns = (
       <>
-        <Grid id='photo-grid' item xs={6}>
+        <Grid id='photo-grid-margs' item xs={6}>
           <Item className='title-comp'>Photo Album</Item>
           <Item id='service-photos'>
           <img className='service-pics' src={viewFreelancer.services_photos} alt='color'/>
@@ -82,13 +87,13 @@ function FreelancerViewOnly ({viewFreelancer,currentUser}) {
         <Grid id='services-prices' item xs={6}>
           <Item className='title-comp'>Services & Prices</Item>
           <Item className='services-cont'>
-            <ServiceTable myServices={myServices}/>
+            <ServiceTable myServices={myServices} currentUser={currentUser}/>
           </Item>
           <Item><Button onClick={handleOpenService}>Book an appointment</Button></Item>
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid zeroMinWidth item xs={12}>
           <Item>Map</Item>
-        </Grid>
+        </Grid> */}
        </>
   )
   
@@ -106,22 +111,24 @@ function FreelancerViewOnly ({viewFreelancer,currentUser}) {
             <h3 className='username'>{viewFreelancer.username}</h3>
             <p className='Location'>{viewFreelancer.email}</p>
             <p className='account-type'>Type: {viewFreelancer.services?"Freelancer":"Client"}</p>
+            <p className='account-type'>{displayAverageRating}/5</p>
           </div>
         </div>
         </Grid>
         <Grid zeroMinWidth item xs={12}>
           <Item className='title-comp-free'>Bookings</Item>
           <Item className='services-cont-book'>
-            <BookingTable myBookings={myBookings}/>
+            <BookingTable myBookings={myBookings} setMyBookings={setMyBookings} viewFreelancer={viewFreelancer}/>
           </Item>
         </Grid>
         {viewFreelancer&&viewFreelancer.account_type==='user'?null:displayFreelanceAddOns}
-        <Grid zeroMinWidth item xs={6}>
+        <Grid zeroMinWidth item xs={12}>
           <Item>Reviews</Item>
+          <Item className='reviews-cont'><Reviews currentUser={currentUser} viewFreelancer={viewFreelancer}/></Item>
         </Grid>
-        <Grid zeroMinWidth item xs={6}>
+        {/* <Grid zeroMinWidth item xs={12}>
           <Item>Chat</Item>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Box>
     
@@ -147,7 +154,7 @@ function FreelancerViewOnly ({viewFreelancer,currentUser}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <BookingForm viewFreelancer={viewFreelancer} currentUser={currentUser} setMyBookings={setMyBookings} myBookings={myBookings}/>
+          <BookingForm viewFreelancer={viewFreelancer} currentUser={currentUser} setMyBookings={setMyBookings} myBookings={myBookings} setOpenService={setOpenService}/>
         </Box>
       </Modal>
     </div>
