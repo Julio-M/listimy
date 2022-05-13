@@ -5,7 +5,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { Button } from "@mui/material";
 
 function ServiceTable ({myServices,setMyServices,currentUser}) {
@@ -24,7 +23,7 @@ function ServiceTable ({myServices,setMyServices,currentUser}) {
     }
 
     return (
-      <TableContainer component={Paper}>
+      <TableContainer>
         <Table sx={{ minWidth: "100%"}} aria-label="simple table">
           <TableBody>
             {myServices.map((row) => (

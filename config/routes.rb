@@ -45,6 +45,9 @@ Rails.application.routes.draw do
 
   #reviews start
   post '/reviews-create', to: 'reviews#create'
+  get '/reviews/freelancers/:id', to: 'reviews#show_rew_free'
+
+  delete '/reviews/:id', to: 'reviews#destroy'
   #reviews end
 
 

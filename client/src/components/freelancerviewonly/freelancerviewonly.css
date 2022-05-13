@@ -28,3 +28,13 @@
   text-align: center;
   margin-top: 0px;
 }
+
+.reviews-cont{
+  height: 30vh;
+}
+
+.reviews-cont{
+  overflow: hidden;
+  overflow-y: scroll;
+  position: relative;
+}
