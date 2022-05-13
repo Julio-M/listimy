@@ -41,12 +41,13 @@ function BookingForm ({viewFreelancer,setMyBookings,currentUser,myBookings,setOp
     })
     }
 
+     // console.log('Hello',`${(bookingDate.getMonth()+1)}/${bookingDate.getDate()}/${bookingDate.getFullYear()} @ ${bookingDate.getHours()}:${bookingDate.getMinutes()}`)
     const handleChange = (e) => {
       const name =e.target.name
       let value = e.target.value
 
       setFormData({...formData, [name]:value,
-        booking_date:bookingDate})
+        booking_date:`${(bookingDate.getMonth()+1)}/${bookingDate.getDate()}/${bookingDate.getFullYear()} @ ${bookingDate.getHours()}:${bookingDate.getMinutes()}`})
     }
 
     const displayServices = viewFreelancer.services.map(serv =><MenuItem key={serv.id} value={serv.id}>{serv.service_name}</MenuItem> )

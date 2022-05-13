@@ -9,6 +9,7 @@ import Modal from '@mui/material/Modal';
 import ServiceTable from "../servicestable/ServiceTable";
 import BookingForm from "../bookingtable/BookingForm";
 import BookingTable from "../bookingtable/BookingTable";
+import Reviews from "../reviews/Reviews";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -118,7 +119,8 @@ function FreelancerViewOnly ({viewFreelancer,currentUser}) {
         {viewFreelancer&&viewFreelancer.account_type==='user'?null:displayFreelanceAddOns}
         <Grid zeroMinWidth item xs={6}>
           <Item>Reviews</Item>
-          <Item className='reviews-cont'>Reviews</Item>
+          <Item className='reviews-cont'><Reviews/></Item>
+          <Item><Button>Post your review</Button></Item>
         </Grid>
         <Grid zeroMinWidth item xs={6}>
           <Item>Chat</Item>
