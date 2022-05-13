@@ -1,12 +1,22 @@
 class UsersController < ApplicationController
-    before_action :find_user, only: %i[show update]
-    before_action :find_freelancer, only: %i[show update]
-    skip_before_action :authorize, only: %i[show create update]
-    skip_before_action :authorize_freelancer, only: %i[show create index update]
+    before_action :find_user, only: %i[show update destroy]
+    before_action :find_freelancer, only: %i[show update destroy]
+    skip_before_action :authorize, only: %i[show create update destroy]
+    skip_before_action :authorize_freelancer, only: %i[show create index update destroy]
     
     def index
         users = User.all
         render json: users
+    end
+
+    def destroy
+        if @user
+            @user.destroy
+            head :no_content
+        else
+            @freelancer.destroy
+            head :no_content
+        end
     end
 
     def show

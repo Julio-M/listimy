@@ -80,6 +80,8 @@ function UserProfile ({currentUser}) {
     setOpenBooking(false)
   };
 
+  const displayAverageRating = currentUser.reviews.map(rew => rew.stars).reduce((a, b) => a + b, 0)/currentUser.reviews.length
+
 
 
   const displayFreelanceAddOns = (
@@ -117,6 +119,7 @@ function UserProfile ({currentUser}) {
             <p className='Location'>{currentUser.email}</p>
             <p className='account-type'>Type: {currentUser.services?"Freelancer":"Client"}</p>
             <p>{currentUser.account_type==='freelancer'?currentUser.location:null}</p>
+            {currentUser.account_type==='freelancer'?<p className='account-type'>{displayAverageRating}/5</p>:null}
           </div>
         </div>
         </Grid>

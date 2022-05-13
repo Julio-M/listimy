@@ -2,8 +2,21 @@ import React, { useState } from "react";
 import './editaccount.css'
 import { Button } from "@mui/material";
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
-function EditAccount ({currentUser,setCurrentUser}) {  
+function EditAccount ({currentUser,setCurrentUser}) {
+    let navigate = useNavigate();  
+
+    const deleteUser = (sid) => {
+      fetch(`users/${sid}`, {
+          method: "DELETE"
+      }).then(setCurrentUser(null)).then(navigate('/login'))
+      .catch( error => console.log(error.message));
+    }
+
+    const handleDelete = () => {
+      deleteUser(currentUser.id)
+    }
 
     const [submitted, setSubmitted] = useState(false)
 
@@ -93,10 +106,6 @@ function EditAccount ({currentUser,setCurrentUser}) {
       patchData()
     }
 
-    const handleDelete = (e) => {
-      console.log('here')
-    }
-
     const displayFree = (
       <>
       <div className="user-box">
@@ -105,6 +114,7 @@ function EditAccount ({currentUser,setCurrentUser}) {
       </div>
       </>
     )
+
 
     return (
         <>
