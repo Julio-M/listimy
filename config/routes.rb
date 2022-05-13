@@ -37,6 +37,10 @@ Rails.application.routes.draw do
 
   get '/bookings/users/:id', to: 'bookings#show_user_booking'
 
+  #post to aws s3 bucket
+
+  post '/presigned_url', to: 'direct_upload#create'
+
 
   # Leave this here to help deploy your app later!
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }

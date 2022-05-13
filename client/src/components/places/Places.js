@@ -17,9 +17,10 @@ const Places = ({setFreelancerData, searchParams, freelancerData, services, setS
     const [selected, setSelected] = useState(null)
     const [searchName, setSearchName] = useState("")
     const query = searchParams.get('category_name')
+    const [listService, setListService] = useState(null)
     
     const {isLoaded} = useLoadScript({
-        googleMapsApiKey: "AIzaSyDoIZLoWdlpEK-wreROwlqh01Yg3bfPkpM",
+        googleMapsApiKey: "",
         libraries: ["places"]
     })
 
@@ -27,13 +28,17 @@ const Places = ({setFreelancerData, searchParams, freelancerData, services, setS
 
     const filtered = freelancerData.filter(freelancer => {
         if (query) {
-            return freelancer.categories.find(category => category.category_name === query)
+             return freelancer.categories.find(category => category.category_name === query)
         } else if (searchName){
-            return freelancer.username.toLowerCase().includes(searchName.toLowerCase())
+             return freelancer.username.toLowerCase().includes(searchName.toLowerCase())
         } else {
             return freelancer
         }
       })
+  
+    useEffect(()=> {
+        setListService(filtered)
+    }, [])
 
     return (
         <Box sx={{px:5}}>
@@ -45,13 +50,13 @@ const Places = ({setFreelancerData, searchParams, freelancerData, services, setS
                 <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
                     {freelancerData.length!==0?filtered.map(freelancer => {
                         return (
-                            <Services setCenterMarker={setCenterMarker} setCenter={setCenter} setViewFreelancer={setViewFreelancer} freelancer={freelancer}/>
+                            <Services setSelected={setSelected} setCenterMarker={setCenterMarker} setCenter={setCenter} setViewFreelancer={setViewFreelancer} freelancer={freelancer}/>
                         )
                     }):<h1>Loading.....</h1>}
                 </List>
                 </Grid>
                 <Grid xs={12} md={8}>
-                {!isLoaded ? <div>Loading...</div> : <Maps setFreelancerData={setFreelancerData} centerMarker={centerMarker} filtered={filtered} selected={selected} center={center} setCenter={setCenter} freelancerData={freelancerData} services={services} setServices={setServices}/>}
+                {!isLoaded ? <div>Loading...</div> : <Maps listService={listService} setFreelancerData={setFreelancerData} centerMarker={centerMarker} filtered={filtered} selected={selected} center={center} setCenter={setCenter} freelancerData={freelancerData} services={services} setServices={setServices}/>}
                 </Grid>
             </Grid>
             </div>

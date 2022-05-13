@@ -2,6 +2,29 @@ import React, { useState } from "react";
 import './editaccount.css'
 import { Button } from "@mui/material";
 import axios from 'axios'
+import CryptoJS from 'crypto-js'
+
+const md5FromFile = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+
+    reader.onload = (fileEvent) => {
+      let binary = CryptoJS.lib.WordArray.create(fileEvent.target.result)
+      const md5 = CryptoJS.MD5(binary)
+      resolve(md5)
+    }
+    reader.onerror = () => {
+      reject ('oops, something went wrong')
+    }
+    reader.readAsArrayBuffer(file)
+  })
+}
+
+export const fileCheckSum = async(file) => {
+  const md5 = await md5FromFile(file)
+  const checksum = md5.toString(CryptoJS.enc.Base64)
+  return checksum
+}
 
 function EditAccount ({currentUser,setCurrentUser}) {  
 
@@ -9,27 +32,85 @@ function EditAccount ({currentUser,setCurrentUser}) {
     
     const [isUpProfile, setIsUpProfile] =useState(false)
     const [isUpCover, setIsUpCover] =useState(false)
-
+    const [file, setFile] = useState("")
     const [myImage, setMyImage] = useState("")
-
+    const [cover, setCover] = useState("")
     const {account_type} = currentUser
 
-    const handleImageSubmit = (e) =>{
-      const formData = new FormData()
-      formData.append("file", myImage)
-      formData.append("upload_preset", "dyza3ykz")
-
-      axios.post("https://api.cloudinary.com/v1_1/dimfaeuml/image/upload",formData,{
-          onUploadProgress: progress => {
-              if(Math.round(progress.loaded/progress.total*100)===100){
-                setIsUpProfile(true)
-              }
+    const createPresignedUrl = async (file, byte_size, checksum) => {
+      let options = {
+        method: 'POST',
+        headers: {
+          'Accept':'application/json',
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+          file: {
+            filename: file.name,
+            byte_size: byte_size,
+            checksum: checksum,
+            content_type: 'image/png',
+            metadata: {
+              'message':'profile image'
+            }
           }
-      })
-      .then(res=>setEditUser({...editUser, "profile_picture":res.data.secure_url}))
-      // .then(()=>setIsLoading(0))
-
+        })
+      }
+      let res = await fetch('/presigned_url', options)
+      if (res.status !== 200) return res
+      return await res.json()
     }
+
+    const updateUser = async (e) => {
+      e.preventDefault()
+      if (file) {
+        console.log(file)
+        const checksum = await fileCheckSum(file)
+        const presignedFileParams = await createPresignedUrl(file, file.size, checksum)
+        console.log(presignedFileParams)
+        const s3PutOptions = {
+          method: 'PUT',
+          headers: presignedFileParams.direct_upload.headers,
+          body: file
+        }
+        console.log(s3PutOptions)
+        let awsRes = await fetch (presignedFileParams.direct_upload.url, s3PutOptions)
+        if (awsRes.status !== 200) return awsRes
+
+        let userPatchOptions = {
+          method: 'PATCH',
+          headers: {
+            'Accept':'application/json',
+            'Content-Type':'application/json'
+          },
+          body: JSON.stringify({
+            image: presignedFileParams.blob_signed_id
+          })
+        }
+        let res = await fetch (`/users/${currentUser.id}`,userPatchOptions)
+        const newuser = await res.json()
+        console.log(newuser)
+        setCurrentUser(newuser)
+      }
+    }
+
+
+    // const handleImageSubmit = (e) =>{
+    //   const formData = new FormData()
+    //   formData.append("file", myImage)
+    //   formData.append("upload_preset", "dyza3ykz")
+
+    //   axios.post("https://api.cloudinary.com/v1_1/dimfaeuml/image/upload",formData,{
+    //       onUploadProgress: progress => {
+    //           if(Math.round(progress.loaded/progress.total*100)===100){
+    //             setIsUpProfile(true)
+    //           }
+    //       }
+    //   })
+    //   .then(res=>setEditUser({...editUser, "profile_picture":res.data.secure_url}))
+    //   // .then(()=>setIsLoading(0))
+
+    // }
 
     const handleCoverImageSubmit = (e) =>{
       const formData = new FormData()
@@ -75,10 +156,10 @@ function EditAccount ({currentUser,setCurrentUser}) {
       setEditUser({...editUser,[name]:value})
     }
 
-    const handleUpload = (e) =>{
-      const file = e.target.files[0]
-      setMyImage(file)
-  }
+//     const handleUpload = (e) =>{
+//       const file = e.target.files[0]
+//       setMyImage(file)
+//   }
 
   const handleCoverUpload = (e) =>{
     const file = e.target.files[0]
@@ -93,8 +174,10 @@ function EditAccount ({currentUser,setCurrentUser}) {
     }
 
     const handleDelete = (e) => {
-      console.log('here')
+      console.log(e.target)
     }
+
+    
 
     const displayFree = (
       <>
@@ -111,9 +194,9 @@ function EditAccount ({currentUser,setCurrentUser}) {
       <h2>Edit your profile</h2>
         <form onSubmit={handleSubmit}>
             <div className="user-box">
-            <input onChange={handleUpload} name='profile-picture'type='file'/>
-            <Button onClick={handleImageSubmit} className='upload btn-upload' id='btn-upload-profile'>Upload Profile Picture</Button>
-            {isUpProfile?<p className='upload'>Done</p>:null}
+            <input onChange={(e)=> setFile(e.target.files[0])} name='profile-picture'type='file'/>
+            <Button onClick={updateUser} className='upload btn-upload' id='btn-upload-profile'>Upload Profile Picture</Button>
+            
             <label>Change your profile picture</label>
             </div>
             <div className="user-box">
@@ -128,6 +211,7 @@ function EditAccount ({currentUser,setCurrentUser}) {
             </div>
             {account_type==='user'?null:displayFree}
             <Button type='submit' id='submitEdit'>Submit</Button>
+            
             <div className='sbutton'>
             <Button onClick={handleDelete} id='go-to-sign-up'>Delete User</Button>
           </div>

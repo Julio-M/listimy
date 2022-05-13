@@ -97,7 +97,7 @@ function Login ({onLogin , accountType, setAccountType}) {
           </RadioGroup>
           </div>
           <Button type='submit' id='submitLogin'>{isLoading ? "Loading..." : "Login"}</Button>
-          <div> {errors.map((err) => (
+          <div> {errors?.map((err) => (
           <p key={err}>{err}</p>
                 ))}</div>
           <div className='sbutton'>
