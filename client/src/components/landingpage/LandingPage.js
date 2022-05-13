@@ -22,7 +22,7 @@ function LandingPage ({selectCategory, setSearchParams, searchParams}) {
     return (
       <div className='main'>
         <div class="hero-image">
-            <TopLayout/>
+            <TopLayout setSearchParams={setSearchParams}/>
         </div>
         <div className="categories">
             <Categories setSearchParams={setSearchParams} categories={categories}/>
