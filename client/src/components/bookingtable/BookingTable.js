@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from "@mui/material";
 
-function BookingTable ({myBookings,setMyBookings,currentUser}) {
+function BookingTable ({myBookings,setMyBookings,viewFreelancer}) {
 
   const deleteData = (sid) => {
     fetch(`bookings/${sid}`, {
@@ -35,7 +35,7 @@ function BookingTable ({myBookings,setMyBookings,currentUser}) {
       </TableCell>
       <TableCell align="right">{row.freelancer.username}</TableCell>
       <TableCell align="right">{row.booking_date}</TableCell>
-      <TableCell align="right">{currentUser.username==='freelancer'?<Button onClick={handleClick} value={row.id} style={{color:'red'}}>Remove</Button>:null}</TableCell>
+      <TableCell align="right">{viewFreelancer?null:<Button onClick={handleClick} value={row.id} style={{color:'red'}}>Remove</Button>}</TableCell>
 
     </TableRow>
   ))

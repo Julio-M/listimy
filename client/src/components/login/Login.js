@@ -44,7 +44,7 @@ function Login ({onLogin , accountType, setAccountType}) {
         }).then((r) => {
         setIsLoading(false);
         if (r.ok) {
-          r.json().then((user) => onLogin(user)).then(navigate('/'));
+          r.json().then((user) => onLogin(user)).then(navigate('/myprofile'));
         } else {
           r.json().then((err) => setErrors(err.errors));
         }

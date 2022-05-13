@@ -43,6 +43,10 @@ Rails.application.routes.draw do
   delete '/bookings/:id', to: 'bookings#destroy'
   #bookings end#
 
+  #reviews start
+  post '/reviews-create', to: 'reviews#create'
+  #reviews end
+
 
   # Leave this here to help deploy your app later!
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }

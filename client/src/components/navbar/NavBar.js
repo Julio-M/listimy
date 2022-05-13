@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 const NavBar = ({setCurrentUser,currentUser,setAccountType}) => {
   let navigate = useNavigate();
   
-  const pages = [<Link to='/places'>Products</Link>];
+  const pages = [currentUser&&currentUser.account_type==='user'?<Link to='/places'><div className='freebar'>Freelancers</div></Link>:null];
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);

@@ -73,7 +73,7 @@ function FreelancerViewOnly ({viewFreelancer,currentUser}) {
 
   const displayFreelanceAddOns = (
       <>
-        <Grid id='photo-grid' item xs={6}>
+        <Grid id='photo-grid-margs' item xs={6}>
           <Item className='title-comp'>Photo Album</Item>
           <Item id='service-photos'>
           <img className='service-pics' src={viewFreelancer.services_photos} alt='color'/>
@@ -86,9 +86,9 @@ function FreelancerViewOnly ({viewFreelancer,currentUser}) {
           </Item>
           <Item><Button onClick={handleOpenService}>Book an appointment</Button></Item>
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid zeroMinWidth item xs={12}>
           <Item>Map</Item>
-        </Grid>
+        </Grid> */}
        </>
   )
   
@@ -112,12 +112,13 @@ function FreelancerViewOnly ({viewFreelancer,currentUser}) {
         <Grid zeroMinWidth item xs={12}>
           <Item className='title-comp-free'>Bookings</Item>
           <Item className='services-cont-book'>
-            <BookingTable myBookings={myBookings} currentUser={currentUser} setMyBookings={setMyBookings}/>
+            <BookingTable myBookings={myBookings} setMyBookings={setMyBookings} viewFreelancer={viewFreelancer}/>
           </Item>
         </Grid>
         {viewFreelancer&&viewFreelancer.account_type==='user'?null:displayFreelanceAddOns}
         <Grid zeroMinWidth item xs={6}>
           <Item>Reviews</Item>
+          <Item className='reviews-cont'>Reviews</Item>
         </Grid>
         <Grid zeroMinWidth item xs={6}>
           <Item>Chat</Item>

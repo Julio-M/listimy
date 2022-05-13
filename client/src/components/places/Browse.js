@@ -2,10 +2,6 @@ import {useState } from "react";
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import Button from '@mui/material/Button';
 import PlacesAutoComplete from "./PlacesAutoComplete";
 
 
