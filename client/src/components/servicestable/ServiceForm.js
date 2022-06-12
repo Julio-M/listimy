@@ -11,7 +11,7 @@ function ServiceForm ({currentUser,setMyServices,myServices,setOpenService}) {
     const [categories,setCategories] = useState([])
 
     const getData = () => {
-      fetch(`http://127.0.0.1:3000/categories`)
+      fetch(`https://listimy.herokuapp.com/categories`)
       .then( res => res.json())
       .then( data => setCategories(data))
       .catch( error => console.log(error.message));
