@@ -8,7 +8,7 @@ function LandingPage ({selectCategory, setSearchParams, searchParams}) {
   const [categories,setCategories] = useState([])
 
   const getData = () => {
-    fetch(`https://listimy.herokuapp.com/categories`)
+    fetch(`http://localhost:3000/categories`)
     .then( res => res.json())
     .then( data => setCategories(data))
     .catch( error => console.log(error.message));

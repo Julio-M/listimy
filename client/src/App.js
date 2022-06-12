@@ -81,12 +81,21 @@ function App() {
     }
   })
   },[])
+
+  const [gapi,setGapi] = useState('')
+
+  useEffect( () => {
+   fetch(`/options`)
+   .then( res => res.json())
+   .then( data => setGapi(data[0].name))
+   .catch( error => console.log(error.message));
+  },[])
   
   
   const displayLoged = (
         <>
         <Route path="/" element={<LandingPage setSearchParams={setSearchParams} searchParams={searchParams}/>} />
-        {currentUser&&currentUser.account_type==='user'?<Route path="/places" element={<Places searchParams={searchParams} freelancerData={freelancerData} services={services} setServices={setServices} setViewFreelancer={setViewFreelancer} viewFreelancer={viewFreelancer}/>}/>:null}
+        {currentUser&&currentUser.account_type==='user'?<Route path="/places" element={<Places searchParams={searchParams} gapi={gapi} freelancerData={freelancerData} services={services} setServices={setServices} setViewFreelancer={setViewFreelancer} viewFreelancer={viewFreelancer}/>}/>:null}
         {currentUser&&!freelancerData.errors&&viewFreelancer&&currentUser.account_type==='user'?<Route path="/freelancer" element={<FreelancerViewOnly viewFreelancer={viewFreelancer} currentUser={currentUser}/>}/>:null}
         <Route path="/myprofile" element={<UserProfile currentUser={currentUser}/>} />
         <Route path="/account" element={<EditAccount currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />

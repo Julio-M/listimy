@@ -10,7 +10,7 @@ import {useState, useEffect} from "react"
 import { useLoadScript } from "@react-google-maps/api"
 
 
-const Places = ({searchParams, freelancerData, services, setServices, setViewFreelancer}) => {
+const Places = ({searchParams, freelancerData, services, setServices, setViewFreelancer,gapi}) => {
 
     const [center, setCenter] = useState({lat: 40.70705345683868, lng: -74.01128952515276})
    
@@ -20,7 +20,7 @@ const Places = ({searchParams, freelancerData, services, setServices, setViewFre
     const query2 = searchParams.get('service_name')
     
     const {isLoaded} = useLoadScript({
-        googleMapsApiKey: "",
+        googleMapsApiKey: gapi,
         libraries: ["places"]
     })
 
@@ -54,7 +54,7 @@ const Places = ({searchParams, freelancerData, services, setServices, setViewFre
                 </List>
                 </Grid>
                 <Grid xs={12} md={8}>
-                {!isLoaded ? <div>Loading...</div> : <Maps selected={selected} center={center} setCenter={setCenter} freelancerData={freelancerData} services={services} setServices={setServices}/>}
+                {!isLoaded ? <div>Loading...</div> : <Maps selected={selected} center={center} setCenter={setCenter} freelancerData={freelancerData} services={services} setServices={setServices} gapi={gapi}/>}
                 </Grid>
             </Grid>
             </div>

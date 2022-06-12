@@ -18,15 +18,15 @@
 # booking3 = Booking.create(user_id: user2.id, freelancer_id: freelancer3.id, booking_date: "5/20/2022")
 
 
-category1 = Category.create(category_name: "Hair Styling", category_picture: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8aGFpciUyMHN0eWxpc3R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60")
-category2 = Category.create(category_name: "Barber", category_picture: "https://images.unsplash.com/photo-1596362601603-b74f6ef166e4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fGJhcmJlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60")
-category3 = Category.create(category_name: "Tattoo", category_picture: "https://images.unsplash.com/photo-1543132384-23765008467c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHRhdHRvbyUyMG1hY2hpbmV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60")
-category4 = Category.create(category_name: "Massage", category_picture: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c3BhfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60")
-category5 = Category.create(category_name: "Beautician", category_picture: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bWFrZSUyMHVwfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60")
-category6 = Category.create(category_name: "Photographer", category_picture: "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FtZXJhfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60")
-category7 = Category.create(category_name: "Modeling", category_picture: "https://images.unsplash.com/photo-1471341971476-ae15ff5dd4ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG9zaG9vdCUyMHN0dWRpb3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60")
-category8 = Category.create(category_name: "Personal Trainer", category_picture: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Z3ltJTIwZXF1aXBtZW50fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60")
-category9 = Category.create(category_name: "Cleaner", category_picture: "https://images.unsplash.com/photo-1563453392212-326f5e854473?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xlYW5pbmclMjBlcXVpcG1lbnR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60")
+# category1 = Category.create(category_name: "Hair Styling", category_picture: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8aGFpciUyMHN0eWxpc3R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60")
+# category2 = Category.create(category_name: "Barber", category_picture: "https://images.unsplash.com/photo-1596362601603-b74f6ef166e4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fGJhcmJlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60")
+# category3 = Category.create(category_name: "Tattoo", category_picture: "https://images.unsplash.com/photo-1543132384-23765008467c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHRhdHRvbyUyMG1hY2hpbmV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60")
+# category4 = Category.create(category_name: "Massage", category_picture: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c3BhfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60")
+# category5 = Category.create(category_name: "Beautician", category_picture: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bWFrZSUyMHVwfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60")
+# category6 = Category.create(category_name: "Photographer", category_picture: "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FtZXJhfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60")
+# category7 = Category.create(category_name: "Modeling", category_picture: "https://images.unsplash.com/photo-1471341971476-ae15ff5dd4ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG9zaG9vdCUyMHN0dWRpb3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60")
+# category8 = Category.create(category_name: "Personal Trainer", category_picture: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Z3ltJTIwZXF1aXBtZW50fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60")
+# category9 = Category.create(category_name: "Cleaner", category_picture: "https://images.unsplash.com/photo-1563453392212-326f5e854473?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xlYW5pbmclMjBlcXVpcG1lbnR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60")
 
 # service1 = Service.create(service_name: "Hairdresser", freelancer_id: freelancer1.id, service_price: 30, category_id: category1.id)
 # service2 = Service.create(service_name: "Barber", freelancer_id: freelancer2.id, service_price: 40, category_id: category2.id)
@@ -40,3 +40,5 @@ category9 = Category.create(category_name: "Cleaner", category_picture: "https:/
 
 # review1 = Review.create(freelancer_id: freelancer1.id, user_id: user1.id, stars: 5, comment: "Was nice")
 # review2 = Review.create(freelancer_id: freelancer3.id, user_id: user2.id, stars: 3, comment: "Was okay")
+
+
